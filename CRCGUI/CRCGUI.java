@@ -112,7 +112,7 @@ public class CRCGUI {
     public void DisplayPolynomialAndGetData(){
         int retflag=0;
         int n=global_n;
-        JTextField data=new JTextField(40);
+        JTextField data=new JTextField(100);
         JLabel label_enter_data=new JLabel("Enter the Data");            
         JButton next_bt=new JButton("Next");
         JLabel disp_info=new JLabel("The Generating Polynomial given by the sender / Divisor is ");
@@ -184,7 +184,7 @@ public class CRCGUI {
                     frame.pack();
 
                     JLabel receiver_data_get=new JLabel("Enter the data that has been received by the receiver at the receiver end");
-                    JTextField receiver_data_inp=new JTextField(40);
+                    JTextField receiver_data_inp=new JTextField(100);
                     JButton checkerror_bt=new JButton("Check Error");
                     receiver_data_get.setBounds(100,200,1200,100);
                     receiver_data_inp.setBounds(100,280,200,40);
