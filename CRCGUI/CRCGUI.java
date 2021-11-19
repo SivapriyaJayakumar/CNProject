@@ -97,7 +97,7 @@ public class CRCGUI {
         label_prompt.setFont(new Font("Verdana", Font.BOLD, 18));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(true);            
-        frame.getContentPane().setPreferredSize(new Dimension(1200,800));
+        frame.getContentPane().setPreferredSize(new Dimension(1300,800));
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
         frame.pack();
@@ -309,7 +309,7 @@ public class CRCGUI {
                 textfieldarr[i]=coeff_tf;
                 labelarr[i]=l;
                 l.setBounds(xc,yc,200,40);
-                coeff_tf.setBounds(xc+100,yc,200,40);
+                coeff_tf.setBounds(xc+100,yc,100,40);
                 l.setFont(new Font("Verdana", Font.BOLD, 18));
                 f.getContentPane().add(l);
                 f.getContentPane().add(coeff_tf);
@@ -318,7 +318,7 @@ public class CRCGUI {
                 yc+=100;
                 if(yc>700){
                     yc=60;
-                    xc+=350;
+                    xc+=250;
                 }
             }
         JButton bt=new JButton("Next");
