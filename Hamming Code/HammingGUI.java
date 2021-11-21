@@ -90,7 +90,7 @@ public class HammingGUI{
         int r1[]={3,5,7,9,11,13,15};
         int r2[]={3,6,7,10,11,14,15};
         int r3[]={5,6,7,12,13,14,15};
-        int r4[]={8,9,10,11,12,13,14,15};
+        int r4[]={9,10,11,12,13,14,15};
         for(int i=received_parity.length-1;i>=0;i--){
             switch(i){
                 case 0: 
@@ -121,7 +121,7 @@ public class HammingGUI{
         int r1[]={3,5,7,9,11,13,15};
         int r2[]={3,6,7,10,11,14,15};
         int r3[]={5,6,7,12,13,14,15};
-        int r4[]={8,9,10,11,12,13,14,15};
+        int r4[]={9,10,11,12,13,14,15};
         
         for(int i=0;i<redundancybits.length;i++){
             switch(i){
