@@ -56,10 +56,13 @@ public class HammingCode{
 
     public int[] checkReceivedParity(int received_parity[],int received_pure_data[],int n){
         int result[]=new int[n];
-        int r1[]={3,5,7,9,11,13,15};
-        int r2[]={3,6,7,10,11,14,15};
-        int r3[]={5,6,7,12,13,14,15};
-        int r4[]={9,10,11,12,13,14,15};
+        
+        int r1[]={3,5,7,9,11,13,15,17,19,21,23,25,27,29,31};
+        int r2[]={3,6,7,10,11,14,15,18,19,22,23,26,27,30,31};
+        int r3[]={5,6,7,12,13,14,15,20,21,22,23,28,29,30,31};
+        int r4[]={9,10,11,12,13,14,15,20,21,22,23,28,29,30,31};
+        int r5[]={17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
+        int r6[]={};
         for(int i=received_parity.length-1;i>=0;i--){
             switch(i){
                 case 0: 
@@ -74,6 +77,10 @@ public class HammingCode{
                 case 3:
                 System.out.println("Case :"+i); 
                 result[i]=recalcParity(received_parity[i],received_pure_data,r4);break;
+                case 4: 
+                result[i]=recalcParity(received_parity[i],received_pure_data,r5);break;
+                case 5: 
+                result[i]=recalcParity(received_parity[i],received_pure_data,r6);break;
             }
             
         }
@@ -86,11 +93,12 @@ public class HammingCode{
     }
     public  int[] calculateParityBits(int r,int data[]){
         int redundancybits[]=new int[r];
-        int r1[]={3,5,7,9,11,13,15};
-        int r2[]={3,6,7,10,11,14,15};
-        int r3[]={5,6,7,12,13,14,15};
-        int r4[]={9,10,11,12,13,14,15};
-        
+        int r1[]={3,5,7,9,11,13,15,17,19,21,23,25,27,29,31};
+        int r2[]={3,6,7,10,11,14,15,18,19,22,23,26,27,30,31};
+        int r3[]={5,6,7,12,13,14,15,20,21,22,23,28,29,30,31};
+        int r4[]={9,10,11,12,13,14,15,20,21,22,23,28,29,30,31};
+        int r5[]={17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
+        int r6[]={32};
         for(int i=0;i<redundancybits.length;i++){
             switch(i){
                 case 0: 
@@ -101,6 +109,10 @@ public class HammingCode{
                 redundancybits[i]=parityValue(data,r3);break;
                 case 3: 
                 redundancybits[i]=parityValue(data,r4);break;
+                case 4: 
+                redundancybits[i]=parityValue(data,r5);break;
+                case 5: 
+                redundancybits[i]=parityValue(data,r6);break;
             }
             
         }
