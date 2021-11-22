@@ -10,6 +10,37 @@ public class HammingCode{
         }
         return true;
     }
+
+    public int BinaryToDecimal(int []binary_data){  
+        int decimal = 0;  
+        int n = 0;  
+        while(n<binary_data.length){  
+                System.out.println("Bit "+binary_data[n]);
+                decimal += binary_data[n]*Math.pow(2, n);  
+                System.out.println("Decimal at iteration "+n +" "+decimal);
+                n++;  
+                  
+        }  
+    return decimal;  
+    } 
+    public int addDedBit(int data[]){
+        int cnt=0;
+        for(int i=0;i<data.length;i++){
+            if(data[i]==1){
+                cnt++;
+            }
+        }
+        if(cnt%2==0){
+            cnt=0;
+        }
+        else{
+            cnt=1;
+        }
+        return cnt;
+        
+    }  
+
+
     public int parityValue(int data[],int redvalue[]){
         int retval=0;
         for(int i=0;i<redvalue.length;i++){
@@ -28,6 +59,7 @@ public class HammingCode{
         }
         return retval;
     }
+
     public int recalcParity(int paritybit,int data[],int redvalue[]){
         int retval=0;
         System.out.println("Initial retval "+retval);
@@ -56,13 +88,11 @@ public class HammingCode{
 
     public int[] checkReceivedParity(int received_parity[],int received_pure_data[],int n){
         int result[]=new int[n];
-        
         int r1[]={3,5,7,9,11,13,15,17,19,21,23,25,27,29,31};
         int r2[]={3,6,7,10,11,14,15,18,19,22,23,26,27,30,31};
         int r3[]={5,6,7,12,13,14,15,20,21,22,23,28,29,30,31};
         int r4[]={9,10,11,12,13,14,15,20,21,22,23,28,29,30,31};
         int r5[]={17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
-        int r6[]={};
         for(int i=received_parity.length-1;i>=0;i--){
             switch(i){
                 case 0: 
@@ -79,8 +109,6 @@ public class HammingCode{
                 result[i]=recalcParity(received_parity[i],received_pure_data,r4);break;
                 case 4: 
                 result[i]=recalcParity(received_parity[i],received_pure_data,r5);break;
-                case 5: 
-                result[i]=recalcParity(received_parity[i],received_pure_data,r6);break;
             }
             
         }
@@ -98,7 +126,6 @@ public class HammingCode{
         int r3[]={5,6,7,12,13,14,15,20,21,22,23,28,29,30,31};
         int r4[]={9,10,11,12,13,14,15,20,21,22,23,28,29,30,31};
         int r5[]={17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
-        int r6[]={32};
         for(int i=0;i<redundancybits.length;i++){
             switch(i){
                 case 0: 
@@ -111,8 +138,6 @@ public class HammingCode{
                 redundancybits[i]=parityValue(data,r4);break;
                 case 4: 
                 redundancybits[i]=parityValue(data,r5);break;
-                case 5: 
-                redundancybits[i]=parityValue(data,r6);break;
             }
             
         }
@@ -195,6 +220,8 @@ public class HammingCode{
                 dataind+=1;
             }
         }
+        int dedbit=obj.addDedBit(data_redundancy);
+        System.out.println("DED SENDER "+dedbit);
         System.out.println("Data With hamming code");
         for(int i=0;i<data_redundancy.length;i++){
             System.out.print(data_redundancy[i]);
@@ -208,6 +235,7 @@ public class HammingCode{
         for(int i=0;i<data_received.length;i++){
             data_received[i]=scan.nextInt();
         }
+        int ded_received=-1;
         k_redind=0;dataind=0;
         for(int i=1;i<=data_redundancy.length;i++){
             if(i==1 || obj.checkPowerOfTwo(i)){
@@ -221,12 +249,33 @@ public class HammingCode{
                 dataind+=1;
             }
         }
+        ded_received=obj.addDedBit(data_received);
+        System.out.println("Recalculated DED bit at receiver side is "+ded_received);
         received_parity_check=new int[redundancybits.length];
         received_parity_check=obj.checkReceivedParity(received_parity,data_received,received_parity.length);
-       
+        int errorbit=obj.BinaryToDecimal(received_parity_check);
+        System.out.println("Error bit is "+errorbit);
 
-        
-
+        if(ded_received==dedbit && errorbit==0 ){
+            System.out.println("NO ERROR");
+        } 
+        else if(ded_received==dedbit && errorbit!=0 ){
+            System.out.println("DED");
+        }
+  
+        else if(ded_received!=dedbit_sender && errorbit!=0){
+            if(data_received[errorbit-1]==0){
+                data_received[errorbit-1]=1;
+            }
+            else{
+                data_received[errorbit-1]=0;
+            }
+            System.out.println("Corrected Error bit is by invertion");
+                for(int i=0;i<data_received.length;i++){
+                    System.out.print(data_received[i]);
+                }  
+            System.out.println();
+        }
 
     }
 }

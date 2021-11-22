@@ -14,6 +14,8 @@ public class HammingGUI{
     int data_receiver_parity[];
     int data_receiver_data[];
     int checkparity[];
+    int dedbit_sender=-1;
+    int ded_received=-1;
     int redundancybits[];
     int data_red_added[];
     int decimal_error_bit=-1;
@@ -25,14 +27,31 @@ public class HammingGUI{
         int decimal = 0;  
         int n = 0;  
         while(n<binary_data.length){  
-                System.out.println("Bit "+binary_data[n]);
-                decimal += binary_data[n]*Math.pow(2, n);  
-                System.out.println("Decimal at iteration "+n +" "+decimal);
-                n++;  
+            System.out.println("Bit "+binary_data[n]);
+            decimal += binary_data[n]*Math.pow(2, n);  
+            System.out.println("Decimal at iteration "+n +" "+decimal);
+            n++;  
                   
         }  
     return decimal;  
-    }              
+    }   
+
+    public int addDedBit(int data[]){
+        int cnt=0;
+        for(int i=0;i<data.length;i++){
+            if(data[i]==1){
+                cnt++;
+            }
+        }
+        if(cnt%2==0){
+            cnt=0;
+        }
+        else{
+            cnt=1;
+        }
+        return cnt;
+        
+    }           
     public int calculateNoOfRedundancyBits(int n){
         int r=0;
         while(Math.pow(2,r) < (n+r+1)){
@@ -100,10 +119,11 @@ public class HammingGUI{
 
     public int[] checkReceivedParity(int received_parity[],int received_pure_data[],int n){
         int result[]=new int[n];
-        int r1[]={3,5,7,9,11,13,15};
-        int r2[]={3,6,7,10,11,14,15};
-        int r3[]={5,6,7,12,13,14,15};
-        int r4[]={9,10,11,12,13,14,15};
+        int r1[]={3,5,7,9,11,13,15,17,19,21,23,25,27,29,31};
+        int r2[]={3,6,7,10,11,14,15,18,19,22,23,26,27,30,31};
+        int r3[]={5,6,7,12,13,14,15,20,21,22,23,28,29,30,31};
+        int r4[]={9,10,11,12,13,14,15,20,21,22,23,28,29,30,31};
+        int r5[]={17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
         for(int i=received_parity.length-1;i>=0;i--){
             switch(i){
                 case 0: 
@@ -118,6 +138,9 @@ public class HammingGUI{
                 case 3:
                 System.out.println("Case :"+i); 
                 result[i]=recalcParity(received_parity[i],received_pure_data,r4);break;
+                case 4: 
+                System.out.println("Case :"+i); 
+                result[i]=recalcParity(received_parity[i],received_pure_data,r5);break;
             }
             
         }
@@ -131,10 +154,11 @@ public class HammingGUI{
 
     public  int[] calculateParityBits(int r,int data[]){
         int redundancybits[]=new int[r];
-        int r1[]={3,5,7,9,11,13,15};
-        int r2[]={3,6,7,10,11,14,15};
-        int r3[]={5,6,7,12,13,14,15};
-        int r4[]={9,10,11,12,13,14,15};
+        int r1[]={3,5,7,9,11,13,15,17,19,21,23,25,27,29,31};
+        int r2[]={3,6,7,10,11,14,15,18,19,22,23,26,27,30,31};
+        int r3[]={5,6,7,12,13,14,15,20,21,22,23,28,29,30,31};
+        int r4[]={9,10,11,12,13,14,15,20,21,22,23,28,29,30,31};
+        int r5[]={17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
         
         for(int i=0;i<redundancybits.length;i++){
             switch(i){
@@ -146,6 +170,8 @@ public class HammingGUI{
                 redundancybits[i]=parityValue(data,r3);break;
                 case 3: 
                 redundancybits[i]=parityValue(data,r4);break;
+                case 4: 
+                redundancybits[i]=parityValue(data,r5);break;
             }
             
         }
@@ -157,7 +183,8 @@ public class HammingGUI{
     }
 
     public void BuildGUI(){
-        frame=new JFrame("Error Correction - Hamming Code");
+        frame=new JFrame("Error Correction - Hamming Code(26,31)");
+        JLabel info=new JLabel("HAMMING CODE ( 26,31) ");
         nprompt=new JLabel("Enter No of Data Bits");
         noofdatabits=new JTextField(40);
         proceedwithnbt=new JButton("Next");
@@ -165,8 +192,8 @@ public class HammingGUI{
             new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e){
                     noofbits=Integer.parseInt(noofdatabits.getText());
-                    if(noofbits >=16){
-                        JOptionPane.showMessageDialog(frame, "Enter any no between 1-15 ! This will only generate Hamming Code till 16 Bits");
+                    if(noofbits >=27){
+                        JOptionPane.showMessageDialog(frame, "Enter any no between 1-26 ! This is HammingCode(31,26)");
                     }
                     else{
                         frame.getContentPane().remove(nprompt);
@@ -192,7 +219,13 @@ public class HammingGUI{
                                     data_rec_bt.addActionListener(
                                         new java.awt.event.ActionListener() {
                                             public void actionPerformed(java.awt.event.ActionEvent e){
+                                                JLabel displayerrorbit=new JLabel("Error at the bit position ");
+                                                JLabel displaygnrlparityrec=new JLabel("General Parity Recalculated at Receiver Side");
+                                                JLabel correctedData=new JLabel("Data after correction by using Invertion Technique ");
+                                                JLabel displayrecdata=new JLabel("Data Received  ");
+                                                JLabel result=new JLabel(" Result is ");
                                                 data_receiver=data_received.getText();
+                                               
                                                 System.out.println("Data Entered By Receiver");
                                                 data_receiver_arr=new int[data_receiver.length()];
                                                 data_receiver_parity=new int[noofredbits];
@@ -200,6 +233,7 @@ public class HammingGUI{
                                                 for(int i=0;i<data_receiver_arr.length;i++){
                                                     data_receiver_arr[i]=Character.getNumericValue(data_receiver.charAt(i));
                                                     System.out.print(data_receiver_arr[i]);
+                                                    displayrecdata.setText(displayrecdata.getText()+data_receiver_arr[i]+" ");
                                                 }
                                                 int k_redind=0;int dataind=0;
                                                 for(int i=1;i<=data_receiver_arr.length;i++){
@@ -214,26 +248,59 @@ public class HammingGUI{
                                                         dataind+=1;
                                                     }
                                                 }
+                                                ded_received=addDedBit(data_receiver_data);
+                                                System.out.println("Recalculated DED bit at receiver side is "+ded_received);
+                                                displaygnrlparityrec.setText(displaygnrlparityrec.getText()+ded_received);
                                                 checkparity=new int[noofredbits];
                                                 checkparity=checkReceivedParity(data_receiver_parity,data_receiver_arr,data_receiver_parity.length);
                                                 decimal_error_bit=BinaryToDecimal(checkparity);
                                                 System.out.println("Error bit is "+decimal_error_bit);
-                                                if(data_receiver_arr[decimal_error_bit-1]==0){
-                                                    data_receiver_arr[decimal_error_bit-1]=1;
+                                                displayrecdata.setFont(new Font("Verdana", Font.BOLD, 18));
+                                                displaygnrlparityrec.setFont(new Font("Verdana", Font.BOLD, 18));
+                                                result.setFont(new Font("Verdana", Font.BOLD, 18));
+                                                frame.getContentPane().add(displayrecdata);
+                                                frame.getContentPane().add(displaygnrlparityrec);
+                                                frame.getContentPane().add(result);
+                                                frame.pack();
+
+                                                if(ded_received==dedbit_sender && decimal_error_bit==0 ){
+                                                    System.out.println("NO ERROR");
+                                                    result.setText(result.getText()+"NO ERROR ");
+                                                } 
+                                                else if(ded_received==dedbit_sender && decimal_error_bit!=0 ){
+                                                    System.out.println("DED --> Double Bit Error Detected and Cannot be Corrected");
+                                                    result.setText(result.getText()+"DED --> Double Bit Error Detected and Cannot be Corrected ");
                                                 }
-                                                else{
-                                                    data_receiver_arr[decimal_error_bit-1]=0;
+                                        
+                                                else if(ded_received!=dedbit_sender && decimal_error_bit!=0){
+                                                    displayerrorbit.setText(displayerrorbit.getText()+decimal_error_bit);
+                                                    result.setText(result.getText()+"SEDC --> Single Bit Error Detected and Corrected ");
+                                                    if(data_receiver_arr[decimal_error_bit-1]==0){
+                                                        data_receiver_arr[decimal_error_bit-1]=1;
+                                                    }
+                                                    else{
+                                                        data_receiver_arr[decimal_error_bit-1]=0;
+                                                    }
+                                                    System.out.println("Corrected Error bit is by invertion");
+                                                    for(int i=0;i<data_receiver_arr.length;i++){
+                                                        System.out.print(data_receiver_arr[i]);
+                                                        correctedData.setText(correctedData.getText()+data_receiver_arr[i]+" ");
+                                                    }  
+                                                    System.out.println();
+                                                    displayerrorbit.setFont(new Font("Verdana", Font.BOLD, 18));
+                                                    frame.getContentPane().add(displayerrorbit);
+                                                    correctedData.setFont(new Font("Verdana", Font.BOLD, 18));
+                                                    frame.getContentPane().add(correctedData);
+                                                    frame.pack();
                                                 }
-                                                System.out.println("Corrected Error bit is by invertion");
-                                                for(int i=0;i<data_receiver_arr.length;i++){
-                                                    System.out.print(data_receiver_arr[i]);
-                                                }  
-                                                System.out.println();
+                                               
                                             
                                             }
                                         }
                                     
                                     );
+                                    displayRedundancyBits.setFont(new Font("Verdana", Font.BOLD, 18));
+                                    enterrecdataprompt.setFont(new Font("Verdana", Font.BOLD, 18));
                                     frame.getContentPane().add(displayRedundancyBits);
                                     frame.getContentPane().add(enterrecdataprompt);
                                     frame.getContentPane().add(data_received);
@@ -252,6 +319,8 @@ public class HammingGUI{
                         nextbt_data.addActionListener(
                             new java.awt.event.ActionListener(){
                                 public void actionPerformed(java.awt.event.ActionEvent e){
+                                    JLabel displaydatahamming=new JLabel(" Data that has to be sent to receiver is :");
+                                    JLabel gnrlparity=new JLabel("General Parity Bit is ");
                                     data_sender=databits.getText();
                                     data_sender_arr=new int[data_sender.length()];
                                     noofredbits=calculateNoOfRedundancyBits(data_sender.length());
@@ -295,11 +364,20 @@ public class HammingGUI{
                                             dataind+=1;
                                         }
                                     }
+                                    dedbit_sender=addDedBit(data_red_added);
+                                    System.out.println("DED BIT FROM SENDER "+dedbit_sender);
+                                    gnrlparity.setText(gnrlparity.getText()+dedbit_sender);
                                     System.out.println("Data With hamming code");
                                     for(int i=0;i<data_red_added.length;i++){
                                         System.out.print(data_red_added[i]);
+                                        displaydatahamming.setText(displaydatahamming.getText()+data_red_added[i]+" ");
+
                                     }
                                     System.out.println();
+                                    gnrlparity.setFont(new Font("Verdana", Font.BOLD, 18));
+                                    displaydatahamming.setFont(new Font("Verdana", Font.BOLD, 18));
+                                    frame.getContentPane().add(displaydatahamming);
+                                    frame.getContentPane().add(gnrlparity);
 
                                 }
                             }
@@ -321,7 +399,9 @@ public class HammingGUI{
             }
         );
         nprompt.setFont(new Font("Verdana", Font.BOLD, 18));
+        info.setFont(new Font("Verdana", Font.BOLD, 18));
         proceedwithnbt.setFont(new Font("Verdana", Font.PLAIN, 18));
+        frame.getContentPane().add(info);
         frame.getContentPane().add(nprompt);
         frame.getContentPane().add(noofdatabits);
         frame.getContentPane().add(proceedwithnbt);
@@ -331,7 +411,7 @@ public class HammingGUI{
         frame.setResizable(true);            
         frame.getContentPane().setPreferredSize(new Dimension(1200,800));
         frame.setLocationRelativeTo(null);
-        frame.setLayout(new FlowLayout());
+        frame.setLayout(new FlowLayout(FlowLayout.CENTER));
         frame.pack();
         frame.setVisible(true);
     }
