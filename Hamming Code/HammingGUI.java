@@ -248,7 +248,7 @@ public class HammingGUI{
                                                         dataind+=1;
                                                     }
                                                 }
-                                                ded_received=addDedBit(data_receiver_data);
+                                                ded_received=addDedBit(data_receiver_arr);
                                                 System.out.println("Recalculated DED bit at receiver side is "+ded_received);
                                                 displaygnrlparityrec.setText(displaygnrlparityrec.getText()+ded_received);
                                                 checkparity=new int[noofredbits];
@@ -409,9 +409,9 @@ public class HammingGUI{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setBackground(new Color(254,243,199));
         frame.setResizable(true);            
-        frame.getContentPane().setPreferredSize(new Dimension(1200,800));
+        frame.getContentPane().setPreferredSize(new Dimension(800,500));
         frame.setLocationRelativeTo(null);
-        frame.setLayout(new FlowLayout(FlowLayout.CENTER));
+        frame.setLayout(new FlowLayout());
         frame.pack();
         frame.setVisible(true);
     }
