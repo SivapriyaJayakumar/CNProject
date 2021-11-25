@@ -126,8 +126,6 @@ public class Checksum{
         for(int j=0;j<k;j++){
             sum=binaryAddition(sum,data[j],n,k);
             System.out.println("From For sum is "+sum);
-
-           
         }        
         String sum_total=Integer.toString(sum);
         if(sum_total.length()>n){
