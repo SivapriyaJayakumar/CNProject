@@ -72,6 +72,7 @@ public class CheckSumGUI{
         
     */
     public long[] findChecksum(String totalsum,int n){
+        System.out.println("Checksum called");
         //sum array --> to store bits by extracting from string.
         long sum[]=new long[n];
         // complementofsum --> long arr to be returned.
@@ -233,6 +234,7 @@ public class CheckSumGUI{
     public long addDataBits(int k,int n,long data[]){
         //Checksum_str --> To store checksum as string
         String Checksum_str="";
+        String totalsum_str="";
         //csum --> To store checksum as long
         long csum=0;
         //InitialSum --> To store Initial sum  into sum
@@ -252,24 +254,31 @@ public class CheckSumGUI{
         // If sum string is > n then overflow has occured.
         //Can be resolved by logic : Sum+carry=NewSum
         //Example --> 10+11=101 (1 is carry) --> 01+1=10 So, Sum is 10.
-        if(sum_total.length()>n){
-            //carry ind --> To find the length of carry
-            int carryind=sum_total.length()-n;
-            //carry --> String from 0th bit to carryind bit
-            String carry=sum_total.substring(0,carryind);
-            //sum_extracted --> String from carryind bit to end of string
-            String sum_extracted=sum_total.substring(carryind);
-            //finalsum --> String to Long conversion of sum
-            finalsum=Long.parseLong(sum_extracted);
-            //finalcarry --> String to Long conversion of carry
-            finalcarry=Long.parseLong(carry);
-            System.out.println("Carry is "+finalcarry);
-            System.out.println("Sum is "+finalsum);
-            //totalsum -->finding sum of sum and carry
-            totalsum=binaryAddition(finalcarry,finalsum,sum_extracted.length(),2);
-            System.out.println("Total Sum is "+totalsum);
-            //totalsum_str -->fconversion of long to string
-            String totalsum_str=Long.toString(totalsum);
+            if(sum_total.length()>n){
+                //carry ind --> To find the length of carry
+                int carryind=sum_total.length()-n;
+                //carry --> String from 0th bit to carryind bit
+                String carry=sum_total.substring(0,carryind);
+                //sum_extracted --> String from carryind bit to end of string
+                String sum_extracted=sum_total.substring(carryind);
+                //finalsum --> String to Long conversion of sum
+                finalsum=Long.parseLong(sum_extracted);
+                //finalcarry --> String to Long conversion of carry
+                finalcarry=Long.parseLong(carry);
+                System.out.println("Carry is "+finalcarry);
+                System.out.println("Sum is "+finalsum);
+                //totalsum -->finding sum of sum and carry
+                totalsum=binaryAddition(finalcarry,finalsum,sum_extracted.length(),2);
+                System.out.println("Total Sum is "+totalsum);
+                //totalsum_str -->fconversion of long to string
+                totalsum_str=Long.toString(totalsum);
+                System.out.println("Total Sum str inside if is "+totalsum_str);
+            }
+            else{
+                totalsum_str=Long.toString(totalsum);
+                System.out.println("Total Sum str inside else is "+totalsum_str);
+            }
+            System.out.println("Checksum callig from addDataBits");
             //checksum --> array to store checksum
             checksum=new long[n];
             // calling findChecksum Method
@@ -282,10 +291,10 @@ public class CheckSumGUI{
             // converting string to long
             csum=Long.parseLong(Checksum_str);
             System.out.println("Int returned checksum is"+csum);
+            return csum;
             
-            
-        }
-        return csum;
+        
+       
     }
     /*
     BuildGUI Method
