@@ -22,7 +22,30 @@ public class HammingGUI{
     String data_sender="";
     String data_receiver="";
     JTextField noofdatabits;
-
+     /*
+    calcOddParity method
+    Returns - parity bit --> int
+    Description : 
+        calculate parity bit using odd parity logic
+        if number of ones in data unit is even --> parity bit is 1. Otherwise parity bit is 0.
+    */
+    public int calcOddParity(int data[]){
+        //retval --> value to be returned
+        int retval=0;
+        for(int i=0;i<data.length;i++){
+            if(data[i]==1){
+                retval++;
+            }
+        }
+        if(retval%2==0){
+            retval=1;
+        }
+        else{
+            retval=0;
+        }
+        return retval;
+    }
+    
     public int BinaryToDecimal(int []binary_data){  
         int decimal = 0;  
         int n = 0;  
@@ -260,6 +283,7 @@ public class HammingGUI{
                                                 result.setFont(new Font("Verdana", Font.BOLD, 18));
                                                 frame.getContentPane().add(displayrecdata);
                                                 frame.getContentPane().add(displaygnrlparityrec);
+                                                result.setForeground(new Color(0,0,255));
                                                 frame.getContentPane().add(result);
                                                 frame.pack();
 

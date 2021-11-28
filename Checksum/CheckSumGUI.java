@@ -83,12 +83,13 @@ public class CheckSumGUI{
         //That will be resolved using the logic. if (diff is < n ), then we can understand that zero's has been truncated and can be added.
         int diff=0;
         if(totalsum.length()<n){
+            System.out.println("if Total sum length is less than i.e the zeros that has been truncated being added here");
             diff=n-totalsum.length();
             int i=0;
             for(i=0;i<diff;i++){
                 complementofsum[i]=1;
                 System.out.println(complementofsum[i]);
-                System.out.println(i+"is i ");
+                System.out.println(i+" is i ");
             }
             //strind --> to keep track of index of string.
             int strind=0;
@@ -131,6 +132,7 @@ public class CheckSumGUI{
         
     */
     public long binaryAddition(long op1,long op2,int n,int k){
+        long backop1=op1;long backop2=op2;
         System.out.println("OP 1 "+op1);
         System.out.println("OP 2 "+op2);
         int i=0;
@@ -142,6 +144,7 @@ public class CheckSumGUI{
         long sumValue=0;
         //sum --> array to store sum of binary numbers
         long sum[]=new long[n+n];
+   
         // Summation Logic --> Until both operands becomes zero, extracting the digits and adding it storing it to sum and dividing operand by 10.
         while(op1!=0 || op2!=0){
             //Extracting ith digits and adding it
@@ -159,20 +162,38 @@ public class CheckSumGUI{
         if(remainder!=0){
             sum[i++]=remainder;
         }
-       i=i-1;
+        i=i-1;
        //Printing summation
         System.out.println("Sum of two binary numbers: ");
             while (i >= 0) {
-                System.out.println(sum[i]);
+                System.out.print(sum[i]);
                 //appending summation bits to sumval string 
                 sumval+=Long.toString(sum[i]);
-                System.out.println("sumval "+sumval);
+                //System.out.println("sumval "+sumval);
                 i--;
             }
-        // converting sumval string to long
-        sumValue=Long.parseLong(sumval);
-        System.out.println("Long sum value "+sumValue);
-        System.out.print("\n"); 
+        
+        System.out.println();
+        System.out.println("end of while in binary addition ");
+        try{
+        
+            if(backop1==0 && backop2==0){
+                System.out.println("Both Operands are 0 ");
+                sumValue=0;
+            }
+            else{
+                // converting sumval string to long
+                sumValue=Long.parseLong(sumval);
+                System.out.println("Long type sum value "+sumValue);
+                System.out.print("\n"); 
+            }
+        }
+        catch(Exception ex){
+            System.out.println(ex + "in binaryAddition Method");
+            JOptionPane.showMessageDialog(frame, " The Value can't be stored in long data type !  "+ex.getMessage());
+            frame.pack();
+            throw ex;
+        }
         return sumValue;
 
     }
@@ -183,77 +204,32 @@ public class CheckSumGUI{
         
     */
     public long addAll(int k,int n,long data[]){
-        //Checksum_str --> To store checksum as string
-        String Checksum_str="";
-        //csum --> To store checksum as long
-        long csum=0;
-        //InitialSum --> To store Initial sum  into sum
-        String InitialSum="";
-        for(int i=0;i<n;i++){
-            InitialSum+="0";
-        }
-        //sum --> To store sum
-        long sum=Long.parseLong(InitialSum);
-        // Adding all data frames 
-        for(int j=0;j<k;j++){
-            sum=binaryAddition(sum,data[j],n,k);
-            System.out.println("From For sum is "+sum);
-        }
-        //sum_total --> Converting final sum of data frames into string.
-        String sum_total=Long.toString(sum);
-        // If sum string is > n then overflow has occured.
-        //Can be resolved by logic : Sum+carry=NewSum
-        //Example --> 10+11=101 (1 is carry) --> 01+1=10 So, Sum is 10.
-        if(sum_total.length()>n){
-            //carry ind --> To find the length of carry
-            int carryind=sum_total.length()-n;
-            //carry --> String from 0th bit to carryind bit
-            String carry=sum_total.substring(0,carryind);
-            //sum_extracted --> String from carryind bit to end of string
-            String sum_extracted=sum_total.substring(carryind);
-            //finalsum --> String to Long conversion of sum
-            finalsum=Long.parseLong(sum_extracted);
-            //finalcarry --> String to Long conversion of carry
-            finalcarry=Long.parseLong(carry);
-            System.out.println("Carry is "+finalcarry);
-            System.out.println("Sum is "+finalsum);
-            //sum -->finding sum of sum and carry
-            sum=binaryAddition(finalcarry,finalsum,sum_extracted.length(),2);
-            System.out.println("Total Sum is "+sum);
-        
-        }
-        return sum;
-           
-    } 
-    /*
-    addDataBits Method -- Sender
-    Returns - Sum of k data frames - long 
-    Description : Find Summation of all data frames
-        
-    */
-    public long addDataBits(int k,int n,long data[]){
-        //Checksum_str --> To store checksum as string
-        String Checksum_str="";
-        String totalsum_str="";
-        //csum --> To store checksum as long
-        long csum=0;
-        //InitialSum --> To store Initial sum  into sum
-        String InitialSum="";
-        for(int i=0;i<n;i++){
-            InitialSum+="0";
-        }
-        //sum --> To store sum
-        long sum=Long.parseLong(InitialSum);
-        // Adding all data frames 
-        for(int j=0;j<k;j++){
-            sum=binaryAddition(sum,data[j],n,k);
-            System.out.println("From For sum is "+sum);
-        }       
-        //sum_total --> Converting final sum of data frames into string. 
-        String sum_total=Long.toString(sum);
-        // If sum string is > n then overflow has occured.
-        //Can be resolved by logic : Sum+carry=NewSum
-        //Example --> 10+11=101 (1 is carry) --> 01+1=10 So, Sum is 10.
+        long sum=0;
+        try{
+            //Checksum_str --> To store checksum as string
+            String Checksum_str="";
+            //csum --> To store checksum as long
+            long csum=0;
+            //InitialSum --> To store Initial sum  into sum
+            String InitialSum="";
+            for(int i=0;i<n;i++){
+                InitialSum+="0";
+            }
+            //sum --> To store sum
+            sum=Long.parseLong(InitialSum);
+            // Adding all data frames 
+            for(int j=0;j<k;j++){
+                System.out.println("for entered : "+j);
+                sum=binaryAddition(sum,data[j],n,k);
+                System.out.println("From addAll For loop the sum is "+sum);
+                System.out.println("for iteration  ended : "+j);
+            }
+            System.out.println("end of for");
+            //sum_total --> Converting final sum of data frames into string.
+            String sum_total=Long.toString(sum);
+            // If sum string is > n then overflow has occured.
+            //Can be resolved by logic : Sum+carry=NewSum
+            //Example --> 10+11=101 (1 is carry) --> 01+1=10 So, Sum is 10.
             if(sum_total.length()>n){
                 //carry ind --> To find the length of carry
                 int carryind=sum_total.length()-n;
@@ -267,31 +243,107 @@ public class CheckSumGUI{
                 finalcarry=Long.parseLong(carry);
                 System.out.println("Carry is "+finalcarry);
                 System.out.println("Sum is "+finalsum);
-                //totalsum -->finding sum of sum and carry
-                totalsum=binaryAddition(finalcarry,finalsum,sum_extracted.length(),2);
-                System.out.println("Total Sum is "+totalsum);
-                //totalsum_str -->fconversion of long to string
-                totalsum_str=Long.toString(totalsum);
-                System.out.println("Total Sum str inside if is "+totalsum_str);
+                //sum -->finding sum of sum and carry
+                sum=binaryAddition(finalcarry,finalsum,sum_extracted.length(),2);
+                System.out.println("Total Sum is "+sum);
+            
             }
-            else{
-                totalsum_str=Long.toString(totalsum);
-                System.out.println("Total Sum str inside else is "+totalsum_str);
-            }
-            System.out.println("Checksum callig from addDataBits");
-            //checksum --> array to store checksum
-            checksum=new long[n];
-            // calling findChecksum Method
-            checksum=findChecksum(totalsum_str,n);
-            // Converting Checksum to string
-            for(int i=0;i<checksum.length;i++){
-                Checksum_str+=Long.toString(checksum[i]);
-            }
-            System.out.println("String checksum is"+Checksum_str);
-            // converting string to long
-            csum=Long.parseLong(Checksum_str);
-            System.out.println("Int returned checksum is"+csum);
-            return csum;
+            
+        }
+        catch (Exception e){
+            sum=-1;
+            System.out.println(e + "in addAll Method");
+            JOptionPane.showMessageDialog(frame, " The Value can't be stored in long data type !  "+e.getMessage());
+            frame.pack();
+        }
+        return sum;
+           
+    } 
+    /*
+    addDataBits Method -- Sender
+    Returns - Sum of k data frames - long 
+    Description : Find Summation of all data frames
+        
+    */
+    public long addDataBits(int k,int n,long data[]){
+    long csum=0;
+    long sum=0;
+    try{
+        //Checksum_str --> To store checksum as string
+        String Checksum_str="";
+        String totalsum_str="";
+        //csum --> To store checksum as long
+     
+        //InitialSum --> To store Initial sum  into sum
+        String InitialSum="";
+        for(int i=0;i<n;i++){
+            InitialSum+="0";
+        }
+        //sum --> To store sum
+        sum=Long.parseLong(InitialSum);
+        // Adding all data frames 
+        for(int j=0;j<k;j++){
+            System.out.println("for entered : "+j);
+            sum=binaryAddition(sum,data[j],n,k);
+            System.out.println("From addDataBits For loop the sum is "+sum);
+            System.out.println("for iteration ended: "+j);
+        }   
+        System.out.println("for ended");    
+        //sum_total --> Converting final sum of data frames into string. 
+        String sum_total=Long.toString(sum);
+        // If sum string is > n then overflow has occured.
+        //Can be resolved by logic : Sum+carry=NewSum
+        //Example --> 10+11=101 (1 is carry) --> 01+1=10 So, Sum is 10.
+        if(sum_total.length()>n){
+            System.out.println("Total Sum 's length is greater than N");
+            //carry ind --> To find the length of carry
+            int carryind=sum_total.length()-n;
+            //carry --> String from 0th bit to carryind bit
+            String carry=sum_total.substring(0,carryind);
+            //sum_extracted --> String from carryind bit to end of string
+            String sum_extracted=sum_total.substring(carryind);
+            //finalsum --> String to Long conversion of sum
+            finalsum=Long.parseLong(sum_extracted);
+            //finalcarry --> String to Long conversion of carry
+            finalcarry=Long.parseLong(carry);
+            System.out.println("Carry is "+finalcarry);
+            System.out.println("Sum is "+finalsum);
+            //totalsum -->finding sum of sum and carry
+            totalsum=binaryAddition(finalcarry,finalsum,sum_extracted.length(),2);
+            System.out.println("Total Sum is "+totalsum);
+            //totalsum_str -->fconversion of long to string
+            totalsum_str=Long.toString(totalsum);
+            System.out.println("Total Sum str inside if is "+totalsum_str);
+        }
+        else{
+            System.out.println("Total Sum 's length is not greater than N");
+            totalsum=sum;
+            totalsum_str=sum_total;
+            System.out.println(" Sum is "+totalsum);
+            System.out.println("Total Sum str inside else is "+totalsum_str);
+        }
+        System.out.println("Checksum callig from addDataBits");
+        //checksum --> array to store checksum
+        checksum=new long[n];            
+        // calling findChecksum Method
+        checksum=findChecksum(totalsum_str,n);
+        // Converting Checksum to string
+        for(int i=0;i<checksum.length;i++){
+            Checksum_str+=Long.toString(checksum[i]);
+        }
+        System.out.println("String checksum is"+Checksum_str);
+        // converting string to long
+        csum=Long.parseLong(Checksum_str);
+        System.out.println("Int returned checksum is"+csum);
+    }
+    catch (Exception e){
+        csum=-1;
+        System.out.println(e + "in addDataBits Method");
+        JOptionPane.showMessageDialog(frame, " The Value can't be stored in long data type !  "+e.getMessage());
+        frame.pack();
+
+    }
+    return csum;
             
         
        
@@ -402,7 +454,7 @@ public class CheckSumGUI{
                                 for(int i=0;i<dataref.length;i++){
                                 frame.getContentPane().remove(dataref[i]);
                                 frame.getContentPane().remove(datareflab[i]);
-                                  frame.pack();
+                                frame.pack();
                                 }
                                  frame.getContentPane().remove(nextbt_data);
                                  frame.pack();
@@ -414,144 +466,186 @@ public class CheckSumGUI{
                                 }
                                 // Data collected from sender being extracted from string arr into long arr
                                 System.out.println("Extracting data into array");
+                                int datacorrect=0;
                                 for(int i=0;i<no_frames;i++){
-                                    data_arr_sender[i]=Long.parseLong(data_collected[i]);
-                                }
-                                // Printing Data collected from sender 
-                                System.out.println("Printing Data Array");
-                                for(int i=0;i<no_frames;i++){
-                                    System.out.println("Frame : "+(i+1));
-                                    System.out.println(data_arr_sender[i]);
+                                    try{
+                                        data_arr_sender[i]=Long.parseLong(data_collected[i]);
+                                    }
+                                    catch (Exception exc){
+                                        datacorrect=-1;
+                                        System.out.println(exc + " Data Sent by sender is too long");
+                                        JOptionPane.showMessageDialog(frame, " The Value can't be stored in long data type !  "+exc.getMessage());
+                                        frame.pack();
+                                        break;
+                                    }
 
                                 }
-                                //Calculating checksum by taking the complement of summation of data frames (By calling addDataBits method) 
-                                csum=addDataBits(no_frames,no_bits,data_arr_sender);
-                                //setting bounds and adding component
-                                JLabel labelrecprompt=new JLabel("Enter Data Received at Receiver Side");
-                                labelrecprompt.setFont(new Font("Verdana", Font.BOLD, 18));
-                                labelrecprompt.setBounds(100,100,400,40);
-                                frame.getContentPane().add(labelrecprompt);
-                                int xc=200,yc=200;
-                                JTextField datareceive[]=new JTextField[no_frames];
-                                // generating k textfield each of n bits --> To get data received
-                                for(int i=0;i<no_frames;i++){
-                                    String promptdata=" Enter Data for Frame "+(i+1);
-                                    JLabel datalabel=new JLabel(promptdata);
-                                    JTextField data=new JTextField(no_bits);
-                                    datareceive[i]=data;
-                                    // to disable textfield once sender has typed n bits
-                                    data.getDocument().addDocumentListener(
-                                        new javax.swing.event.DocumentListener(){
-                                            public void changedUpdate(javax.swing.event.DocumentEvent e){}
-                                            public void insertUpdate(javax.swing.event.DocumentEvent e){
-                                                if(data.getText().length()==no_bits){
-                                                    System.out.println("Disabled");
-                                                    data.setEditable(false);
+                                if(datacorrect!=-1){
+                                    // Printing Data collected from sender 
+                                    System.out.println("Printing Data Array");
+                                    for(int i=0;i<no_frames;i++){
+                                        System.out.println("Frame : "+(i+1));
+                                        System.out.println(data_arr_sender[i]);
+
+                                    }
+                                    //Calculating checksum by taking the complement of summation of data frames (By calling addDataBits method) 
+                                    csum=addDataBits(no_frames,no_bits,data_arr_sender);
+                                    System.out.println("csum is "+ csum);
+                                    if(csum!=-1){
+                                        //setting bounds and adding component
+                                        JLabel labelrecprompt=new JLabel("Enter Data Received at Receiver Side");
+                                        labelrecprompt.setFont(new Font("Verdana", Font.BOLD, 18));
+                                        labelrecprompt.setBounds(100,100,400,40);
+                                        frame.getContentPane().add(labelrecprompt);
+                                        int xc=200,yc=200;
+                                        JTextField datareceive[]=new JTextField[no_frames];
+                                        // generating k textfield each of n bits --> To get data received
+                                        for(int i=0;i<no_frames;i++){
+                                            String promptdata=" Enter Data for Frame "+(i+1);
+                                            JLabel datalabel=new JLabel(promptdata);
+                                            JTextField data=new JTextField(no_bits);
+                                            datareceive[i]=data;
+                                            // to disable textfield once sender has typed n bits
+                                            data.getDocument().addDocumentListener(
+                                                new javax.swing.event.DocumentListener(){
+                                                    public void changedUpdate(javax.swing.event.DocumentEvent e){}
+                                                    public void insertUpdate(javax.swing.event.DocumentEvent e){
+                                                        if(data.getText().length()==no_bits){
+                                                            System.out.println("Disabled");
+                                                            data.setEditable(false);
+                                                        }
+                                                    }
+                                                    public void removeUpdate(javax.swing.event.DocumentEvent e){}
+                                                }
+                                            ); 
+                                            //setting bounds and adding component
+                                            datalabel.setBounds(xc,yc,400,40);
+                                            datalabel.setFont(new Font("Verdana", Font.BOLD, 18));
+                                            data.setBounds(xc+300,yc,200,40);
+                                            frame.getContentPane().add(datalabel);
+                                            frame.getContentPane().add(data);
+                                            frame.pack();
+                                            yc+=100;
+                                            if(yc==700){
+                                                yc+=100;
+                                                xc+=100;
+                                            }
+                                        }
+                                        //setting bounds and adding component
+                                        JButton nextres=new JButton("Check Error");
+                                        nextres.setBounds(xc,yc,200,40);
+                                        frame.getContentPane().add(nextres);
+                                        frame.pack();
+                                        // Initialising array 
+                                        data_arr_reciever=new long[no_frames+1];
+                                        data_received=new String[no_frames+1];
+                                        // after getting data that has been received
+                                        nextres.addActionListener(
+                                            new java.awt.event.ActionListener() {
+                                                public void actionPerformed(java.awt.event.ActionEvent e){
+                                                    // Data collected from receiver being stored into string arr
+                                                    System.out.println("Data collected from Receiver");
+                                                    for(int i=0;i<datareceive.length;i++){
+                                                        data_received[i]=datareceive[i].getText();
+                                                        System.out.println(" data_received [ "+ i +"] : " +data_received[i]);
+                                                    }
+                                                    // Data collected from receiver being extracted from string arr into long arr
+                                                    int datareccorrect=0;
+                                                    System.out.println("Extracting receiver data into array");
+                                                    for(int i=0;i<no_frames;i++){
+                                                        try{
+                                                        data_arr_reciever[i]=Long.parseLong(data_received[i]);
+                                                        }
+                                                        catch (Exception ex){
+                                                            datareccorrect=-1;
+                                                            System.out.println(ex + " Data Received by Receiver is too long");
+                                                            JOptionPane.showMessageDialog(frame, " The Value can't be stored in long data type !  "+ex.getMessage());
+                                                            frame.pack();
+                                                            break;
+                                                        }
+                                                    }
+
+                                                    if(datareccorrect!=-1){
+                                                        // adding checksum produced as last element of data_arr_reciever
+                                                        System.out.println("csum is "+ csum);
+                                                        data_arr_reciever[no_frames]=csum;
+                                                        // Printing data collected from receiver
+                                                        System.out.println("Printing Data receiver Array");
+                                                        for(int i=0;i<no_frames+1;i++){
+                                                            System.out.println("Frame : "+(i+1));
+                                                            System.out.println(data_arr_reciever[i]);
+                                                        }
+                                                        //Calculating sum of dataframes and checksum  (By calling addAll method) 
+                                                        value=addAll(no_frames+1,no_bits,data_arr_reciever);
+                                                        if(value!=-1){
+                                                            System.out.println("return value"+value); 
+                                                            String strvalue=Long.toString(value);
+                                                            System.out.println("return value string"+strvalue); 
+                                                            String final_value=strvalue;
+                                                            System.out.println("final value  string"+final_value); 
+                                                            //checksum_receiver --> long arr to store sum of data units and checksum calc at receiver end
+                                                            checksum_receiver=new long[no_bits];
+                                                            // if sum of data units and checksum  is less than no_bits then zeros in front will be truncated.
+                                                            //resolving that
+                                                            if(final_value.length()<no_bits){
+                                                                int diff=no_bits-final_value.length();
+                                                                int strind=0;
+                                                                for(int i=0;i<diff;i++){
+                                                                    checksum_receiver[i]=0;
+                                                                    System.out.print(checksum_receiver[i]);
+                                                                }
+                                                                for(int j=diff;j<no_bits;j++){
+                                                                    checksum_receiver[j]=Character.getNumericValue(final_value.charAt(strind));
+                                                                    strind++;
+                                                                    System.out.print(checksum_receiver[j]);
+                                                                }
+                                                                System.out.println();
+                                                            }
+                                                            // if  sum of data units and checksum  is == no_bits
+                                                            else{
+                                                                for(int i=0;i<no_bits;i++){
+                                                                    checksum_receiver[i]=Character.getNumericValue(final_value.charAt(i));
+                                                                }
+                                                            }
+                                                            JLabel result = new JLabel(" THE RESULT IS : ");
+                                                            boolean flag_checksum=false;
+                                                            //complementing the sum
+                                                            checksum_receiver=complement(checksum_receiver);
+                                                            // if all zeros --> no error else error
+                                                            for(int i=0;i<checksum_receiver.length;i++){
+                                                                
+                                                                if(checksum_receiver[i]==0){
+                                                                    continue;
+                                                                }
+                                                                else if(checksum_receiver[i]!=0){
+                                                                    flag_checksum=true;
+                                                                    break;
+                                                                }
+                                                            }
+                                                            if(flag_checksum==true){
+                                                                System.out.println("RESULT IS ERROR");
+                                                                result.setText(result.getText()+" ERROR");
+                                                                
+                                                            }
+                                                            else if(flag_checksum==false){
+                                                                System.out.println(" RESULT IS NO ERROR");
+                                                                result.setText(result.getText()+" NO ERROR");
+
+                                                            }
+                                                            result.setBounds(100,500,2000,80);
+                                                            result.setFont(new Font("Verdana", Font.BOLD, 18));
+                                                            result.setForeground(new Color(0,0,255));
+                                                            frame.getContentPane().add(result);
+                                                            frame.pack();
+                                                            
+
+                                                        }
+                                                    }
                                                 }
                                             }
-                                            public void removeUpdate(javax.swing.event.DocumentEvent e){}
-                                        }
-                                    ); 
-                                    //setting bounds and adding component
-                                    datalabel.setBounds(xc,yc,400,40);
-                                    datalabel.setFont(new Font("Verdana", Font.BOLD, 18));
-                                    data.setBounds(xc+300,yc,200,40);
-                                    frame.getContentPane().add(datalabel);
-                                    frame.getContentPane().add(data);
-                                    frame.pack();
-                                    yc+=100;
-                                    if(yc==700){
-                                        yc+=100;
-                                        xc+=100;
+                                        );
                                     }
                                 }
-                                //setting bounds and adding component
-                                JButton nextres=new JButton("Check Error");
-                                nextres.setBounds(xc,yc,200,40);
-                                frame.getContentPane().add(nextres);
-                                frame.pack();
-                                // Initialising array 
-                                data_arr_reciever=new long[no_frames+1];
-                                data_received=new String[no_frames+1];
-                                // after getting data that has been received
-                                nextres.addActionListener(
-                                    new java.awt.event.ActionListener() {
-                                        public void actionPerformed(java.awt.event.ActionEvent e){
-                                            // Data collected from receiver being stored into string arr
-                                            System.out.println("Data collected from Receiver");
-                                            for(int i=0;i<datareceive.length;i++){
-                                                data_received[i]=datareceive[i].getText();
-                                                System.out.println(" data_received [ "+ i +"] : " +data_received[i]);
-                                            }
-                                            // Data collected from receiver being extracted from string arr into long arr
-                                            System.out.println("Extracting receiver data into array");
-                                            for(int i=0;i<no_frames;i++){
-                                                data_arr_reciever[i]=Long.parseLong(data_received[i]);
-                                            }
-                                            // adding checksum produced as last element of data_arr_reciever
-                                            data_arr_reciever[no_frames]=csum;
-                                            // Printing data collected from receiver
-                                            System.out.println("Printing Data receiver Array");
-                                            for(int i=0;i<no_frames+1;i++){
-                                                System.out.println("Frame : "+(i+1));
-                                                System.out.println(data_arr_reciever[i]);
-                                                
-                                            }
-                                            //Calculating sum of dataframes and checksum  (By calling addAll method) 
-                                            value=addAll(no_frames+1,no_bits,data_arr_reciever);
-
-                                            System.out.println("return value"+value); 
-                                            String strvalue=Long.toString(value);
-                                            System.out.println("return value string"+strvalue); 
-                                            String final_value=strvalue;
-                                            System.out.println("final value  string"+final_value); 
-                                            //checksum_receiver --> long arr to store sum of data units and checksum calc at receiver end
-                                            checksum_receiver=new long[no_bits];
-                                            // if sum of data units and checksum  is less than no_bits then zeros in front will be truncated.
-                                            //resolving that
-                                            if(final_value.length()<no_bits){
-                                                int diff=no_bits-final_value.length();
-                                                int strind=0;
-                                                for(int i=0;i<diff;i++){
-                                                    checksum_receiver[i]=0;
-                                                    System.out.print(checksum_receiver[i]);
-                                                }
-                                                for(int j=diff;j<no_bits;j++){
-                                                    checksum_receiver[j]=Character.getNumericValue(final_value.charAt(strind));
-                                                    strind++;
-                                                    System.out.print(checksum_receiver[j]);
-                                                }
-                                                 System.out.println();
-                                            }
-                                            // if  sum of data units and checksum  is == no_bits
-                                            else{
-                                                 for(int i=0;i<no_bits;i++){
-                                                    checksum_receiver[i]=Character.getNumericValue(final_value.charAt(i));
-                                                }
-                                            }
-                                            boolean flag_checksum=false;
-                                            //complementing the sum
-                                            checksum_receiver=complement(checksum_receiver);
-                                            // if all zeros --> no error else error
-                                            for(int i=0;i<checksum_receiver.length;i++){
-                                                
-                                                if(checksum_receiver[i]==0){
-                                                    continue;
-                                                }
-                                                else if(checksum_receiver[i]!=0){
-                                                    flag_checksum=true;
-                                                    break;
-                                                }
-                                            }
-                                            if(flag_checksum==true){
-                                                System.out.println("ERROR");
-                                            }
-                                            else if(flag_checksum==false){
-                                                System.out.println("NO ERROR");
-                                            }
-                                        }
-                                    }
-                                );
                                 
                             }
                         

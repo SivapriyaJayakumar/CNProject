@@ -1,6 +1,7 @@
 import java.util.*;
 import javax.swing.*;
 import java.awt.*;    
+import java.awt.Color;
 
 public class twodparity{
     // frame 
@@ -9,17 +10,27 @@ public class twodparity{
     int n;
     // k --> no of frame
     int k;
-    // choice --> for odd/ even parity
+    // data_send_str --> to store data sent by sender
     String data_send_str[];
+    // data_receive_str --> to store data received by receiver
     String data_receive_str[];
+    // choice --> for odd/ even parity
     int choice;
+    // sender  --> Extracting data sent by sender and storing it to an int arr
     int sender[][];
+    // receiver  --> Extracting data received by receiver and storing it to an int arr
     int receiver[][];
+    // rowparity  --> to store row wise parities at sender side
     int rowparity[];
+    // colparity  --> to store column wise parities at sender side
     int colparity[];
+    // rparity  --> to store column parity of row parities
     int rparity=-1;
+    // cparity  --> to store row parity of column parities
     int cparity=-1;
+    // rowparity_receiver  --> to store row wise parities at receiver side
     int rowparity_receiver[];
+    // colparity_receiver  --> to store column wise parities at receiver side
     int colparity_receiver[];
 
     /*calcEvenParity method
@@ -171,7 +182,7 @@ public class twodparity{
     Returns - parity bit for each column of data unit --> int[]
     Description : 
         calculate parity bit using even parity logic
-        if number of ones in data unit is even --> parity bit is 0. Otherwise parity bit is 1.
+        if number of ones in data unit is even --> parity bit is 1. Otherwise parity bit is 0.
     */
     public int[] calcColOddParity(int data[][],int n,int k){
         //retval --> value to be returned
@@ -208,6 +219,8 @@ public class twodparity{
     */
     
     public void BuildGUI(){
+        JLabel divider=new JLabel(" | ");
+        
         //frame --> Setting title
         frame=new JFrame("Error Detector - Single Parity");
         //kprompt --> Setting label
@@ -282,6 +295,7 @@ public class twodparity{
                                 }
                                 //sender --> extracting the data into arr
                                 System.out.println("Data from Sender ");
+                                
                                 for(int i=0;i<k;i++){
                                     System.out.println(" Extracting Data for frame"+(i+1));
                                     for(int j=0;j<n;j++){
@@ -290,6 +304,7 @@ public class twodparity{
                                         displaydata.setText(displaydata.getText()+sender[i][j]+" ");
                                     }
                                     System.out.println();
+                                    displaydata.setText(displaydata.getText()+divider.getText());
                                 }
                                 // r1,r2 --> radiobutton to choose parity
                                 JRadioButton r1=new JRadioButton("EVEN PARITY");    
@@ -312,6 +327,7 @@ public class twodparity{
                                             rowparity=new int[k];
                                             colparity=new int[n];
                                             // if r1 is selected --> even parity is selected
+                                            // calculating row paritoes, colparities, rparity,cparity
                                             if(r1.isSelected()){
                                                 choice=1;
                                                 System.out.println("Chosen EVEN PARITY ");
@@ -323,6 +339,7 @@ public class twodparity{
                                                 displaychosenparity.setText(displaychosenparity.getText()+"  EVEN PARITY");
                                             }
                                             // if r2 is selected --> odd parity is selected
+                                            // calculating row paritoes, colparities, rparity,cparity
                                             else if(r2.isSelected()){
                                                 choice=2;
                                                 System.out.println("Chosen ODD PARITY ");
@@ -351,9 +368,10 @@ public class twodparity{
                                                 System.out.println((i+1)+"Data of frame ");
                                                 for(int j=0;j<n+1;j++){
                                                     System.out.print(sender[i][j]+" ");
-                                                     datatobesent.setText(datatobesent.getText()+sender[i][j]+" ");
+                                                    datatobesent.setText(datatobesent.getText()+sender[i][j]+" ");
                                                 }
                                                 System.out.println();
+                                                datatobesent.setText(datatobesent.getText()+divider.getText());
                                             }
                                             
                                             // data_rec_label --> enter data received
@@ -379,14 +397,19 @@ public class twodparity{
                                             // checkerr --> button to proceed after data entered by receiver
                                             JButton checkerr=new JButton("Check Error");
                                             // adding elements to frame
+                                            displaychosenparity.setMaximumSize(new Dimension(2000,40));
+                                            datatobesent.setMaximumSize(new Dimension(2000,40));
+                                            data_rec_label.setMaximumSize(new Dimension(2000,40));
                                             frame.getContentPane().add(displaychosenparity);
                                             frame.getContentPane().add(datatobesent);
                                             frame.getContentPane().add(data_rec_label);
                                             frame.pack();
                                             for(int i=0;i<k+1;i++){
+                                                dataframerefreceive[i].setMaximumSize(new Dimension(800,40));
                                                 frame.getContentPane().add(dataframerefreceive[i]);
                                                 frame.pack();
                                             }
+                                            checkerr.setMaximumSize(new Dimension(150,40));
                                             frame.getContentPane().add(checkerr);
                                             frame.pack();
                                             //after entering data received by receiver
@@ -415,10 +438,12 @@ public class twodparity{
                                                                 displaydata.setText(displaydata.getText()+receiver[i][j]+" ");
                                                             }
                                                             System.out.println();
+                                                            displaydata.setText(displaydata.getText()+divider.getText());
                                                         }
                                                         // getting parity choice 
                                                         switch(choice){
                                                             // if even parity is chosen , 1st case will be executed.
+                                                            // calculating row paritoes, colparities, rparity,cparity
                                                             case 1:
                                                             rowparity_receiver=calcRowEvenParity(receiver,n+1,k+1);
                                                             colparity_receiver=calcColEvenParity(receiver,n+1,k+1);
@@ -426,6 +451,7 @@ public class twodparity{
                                                             cparity=calcEvenParity(colparity_receiver);break;
                                                             
                                                             // if odd parity is chosen , 2nd case will be executed.
+                                                            // calculating row paritoes, colparities, rparity,cparity
                                                             case 2:
                                                             rowparity_receiver=calcRowOddParity(receiver,n+1,k+1);
                                                             colparity_receiver=calcColOddParity(receiver,n+1,k+1);
@@ -433,6 +459,8 @@ public class twodparity{
                                                             cparity=calcOddParity(colparity_receiver);
                                                             break;
                                                         }
+                                                        // if all row parities are 0 --> rowparity_flag is true
+                                                        // cparity is row parity of column parities
                                                         boolean rowparity_flag=true;
                                                         for(int i=0;i<rowparity_receiver.length;i++){
                                                             if(cparity==0){
@@ -444,7 +472,8 @@ public class twodparity{
                                                                 rowparity_flag=false;break;
                                                             }
                                                         }
-
+                                                        // if all column parities are 0 --> colparity_flag is true
+                                                        // rparity is column parity of row parities
                                                         boolean colparity_flag=true;
                                                         for(int i=0;i<colparity_receiver.length;i++){
                                                             if(rparity==0){
@@ -466,7 +495,11 @@ public class twodparity{
                                                             result.setText(result.getText()+"  ERROR ");
                                                         }
                                                         //adding GUI elements
+                                                        datafromrec.setMaximumSize(new Dimension(2000,40));
+                                                        result.setMaximumSize(new Dimension(2000,40));
                                                         frame.getContentPane().add(datafromrec);
+                                                        result.setForeground(new Color(0,0,255));
+                                                        result.setFont(new Font("Verdana", Font.BOLD, 18));
                                                         frame.getContentPane().add(result);
                                                         frame.pack();
 
@@ -478,29 +511,39 @@ public class twodparity{
                                 );
                                 //adding GUI elements
                                 bg.add(r1);bg.add(r2); 
+                                displaydata.setMaximumSize(new Dimension(2000,40));
                                 frame.add(displaydata);   
-                                frame.add(r1);frame.add(r2);frame.add(calcparity);frame.pack();
+                                frame.add(r1);frame.add(r2);
+                                calcparity.setMaximumSize(new Dimension(150,40));
+                                frame.add(calcparity);frame.pack();
                             }
                         }
 
                     );
                     //adding GUI elements
+                    enterdataprompt.setMaximumSize(new Dimension(2000,40));
                     frame.getContentPane().add(enterdataprompt);
                     for(int i=0;i<k;i++){
+                        dataframerefsend[i].setMaximumSize(new Dimension(800,40));
                         frame.getContentPane().add(dataframerefsend[i]);
                         frame.pack();
                     }
-                    
+                    nextbt_data.setMaximumSize(new Dimension(150,40));
                     frame.getContentPane().add(nextbt_data);
                     frame.pack();
                 }
             }
         );
         //adding GUI elements
+        kprompt.setMaximumSize(new Dimension(2000,40));
         frame.getContentPane().add(kprompt);
+        ktextbox.setMaximumSize(new Dimension(800,40));
         frame.getContentPane().add(ktextbox);
+        nprompt.setMaximumSize(new Dimension(2000,40));
         frame.getContentPane().add(nprompt);
+        ntextbox.setMaximumSize(new Dimension(800,40));
         frame.getContentPane().add(ntextbox);
+        next.setMaximumSize(new Dimension(150,40));
         frame.getContentPane().add(next);
         frame.pack();
         //setting frame properties
@@ -509,7 +552,7 @@ public class twodparity{
         frame.setResizable(true);            
         frame.getContentPane().setPreferredSize(new Dimension(600,600));
         frame.setLocationRelativeTo(null);
-        FlowLayout layout=new FlowLayout();
+        BoxLayout layout=new BoxLayout(frame.getContentPane(),BoxLayout.Y_AXIS);
         frame.setLayout(layout);
         frame.pack();
         frame.setVisible(true);

@@ -256,6 +256,7 @@ public class CRCGUI {
                                         received_info.setBounds(100,220,2000,80);
                                         received_info.setFont(new Font("Verdana", Font.BOLD,18));
                                         check_result.setFont(new Font("Verdana", Font.BOLD, 18));
+                                        check_result.setForeground(new Color(0,0,255));
                                         frame.getContentPane().remove(receiver_data_get);
                                         frame.getContentPane().remove(receiver_data_inp);
                                         frame.getContentPane().remove(checkerror_bt);

@@ -193,10 +193,15 @@ public class singleparity{
                                             // checkerr --> button to proceed after data entered by receiver
                                             JButton checkerr=new JButton("Check Error");
                                             // adding elements to frame
+                                            displaychosenparity.setMaximumSize(new Dimension(2000,40));
                                             frame.getContentPane().add(displaychosenparity);
+                                            datatobesent.setMaximumSize(new Dimension(2000,40));
                                             frame.getContentPane().add(datatobesent);
+                                            data_rec_label.setMaximumSize(new Dimension(2000,40));
                                             frame.getContentPane().add(data_rec_label);
+                                            data_receive.setMaximumSize(new Dimension(800,40));
                                             frame.getContentPane().add(data_receive);
+                                            checkerr.setMaximumSize(new Dimension(150,40));
                                             frame.getContentPane().add(checkerr);
                                             frame.pack();
                                             //after entering data received by receiver
@@ -247,7 +252,11 @@ public class singleparity{
                                                             break;
                                                         }
                                                         //adding GUI elements
+                                                        datafromrec.setMaximumSize(new Dimension(2000,40));
+                                                        result.setMaximumSize(new Dimension(2000,40));
                                                         frame.getContentPane().add(datafromrec);
+                                                        result.setForeground(new Color(0,0,255));
+                                                        result.setFont(new Font("Verdana", Font.BOLD, 18));
                                                         frame.getContentPane().add(result);
                                                         frame.pack();
 
@@ -259,23 +268,32 @@ public class singleparity{
                                 );
                                 //adding GUI elements
                                 bg.add(r1);bg.add(r2); 
+                                displaydata.setMaximumSize(new Dimension(2000,40));
                                 frame.add(displaydata);   
-                                frame.add(r1);frame.add(r2);frame.add(calcparity);frame.pack();
+                                frame.add(r1);frame.add(r2);
+                                calcparity.setMaximumSize(new Dimension(150,40));
+                                frame.add(calcparity);frame.pack();
                             }
                         }
 
                     );
                     //adding GUI elements
+                    enterdataprompt.setMaximumSize(new Dimension(2000,40));
                     frame.getContentPane().add(enterdataprompt);
+                    data_send.setMaximumSize(new Dimension(800,40));
                     frame.getContentPane().add(data_send);
+                    nextbt_data.setMaximumSize(new Dimension(150,40));
                     frame.getContentPane().add(nextbt_data);
                     frame.pack();
                 }
             }
         );
         //adding GUI elements
+        nprompt.setMaximumSize(new Dimension(2000,40));
         frame.getContentPane().add(nprompt);
+        ntextbox.setMaximumSize(new Dimension(800,40));
         frame.getContentPane().add(ntextbox);
+        next.setMaximumSize(new Dimension(150,40));
         frame.getContentPane().add(next);
         frame.pack();
         //setting frame properties
@@ -284,8 +302,8 @@ public class singleparity{
         frame.setResizable(true);            
         frame.getContentPane().setPreferredSize(new Dimension(600,600));
         frame.setLocationRelativeTo(null);
-        FlowLayout layout=new FlowLayout();
-        frame.setLayout(layout);
+        BoxLayout layout=new BoxLayout(frame.getContentPane(),BoxLayout.Y_AXIS);
+        frame.getContentPane().setLayout(layout);
         frame.pack();
         frame.setVisible(true);
     }
