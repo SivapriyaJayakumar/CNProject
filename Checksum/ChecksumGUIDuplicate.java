@@ -2,7 +2,7 @@ import java.util.*;
 import javax.swing.*;
 import java.awt.*;    
 import javax.swing.JOptionPane;
-public class CheckSumGUI{
+public class CheckSumGUIDuplicate{
     // frame
     JFrame frame;
     // no of frames --> Textfield
@@ -175,31 +175,12 @@ public class CheckSumGUI{
         
         System.out.println();
         System.out.println("end of while in binary addition ");
-        
         try{
         
             if(backop1==0 && backop2==0){
                 System.out.println("Both Operands are 0 ");
                 sumValue=0;
             }
-            else if(sumval.length()>n){
-            //carry ind --> To find the length of carry
-            int carryind=sumval.length()-n;
-            //carry --> String from 0th bit to carryind bit
-            String carry=sumval.substring(0,carryind);
-            //sum_extracted --> String from carryind bit to end of string
-            String sum_extracted=sumval.substring(carryind);
-            //finalsum --> String to Long conversion of sum
-            finalsum=Long.parseLong(sum_extracted);
-            //finalcarry --> String to Long conversion of carry
-            finalcarry=Long.parseLong(carry);
-            System.out.println("Carry is "+finalcarry);
-            System.out.println("Sum is "+finalsum);
-            //sum -->finding sum of sum and carry
-            long inter_sum=binaryAddition(finalcarry,finalsum,sum_extracted.length(),2);
-            System.out.println("Total Sum is "+inter_sum);
-            sumValue=inter_sum;
-        }
             else{
                 // converting sumval string to long
                 sumValue=Long.parseLong(sumval);
@@ -689,7 +670,7 @@ public class CheckSumGUI{
     }
     public static void main(String args[]){
         //creating object for class and calling BuildGUI
-        CheckSumGUI checksumgui=new CheckSumGUI();
+        CheckSumGUIDuplicate checksumgui=new CheckSumGUIDuplicate();
         checksumgui.BuildGUI();
     }
 
