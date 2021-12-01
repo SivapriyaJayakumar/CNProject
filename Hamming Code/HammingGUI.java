@@ -375,81 +375,81 @@ public class HammingGUI{
                                                 data_rec_bt.addActionListener(
                                                     new java.awt.event.ActionListener() {
                                                         public void actionPerformed(java.awt.event.ActionEvent e){
-                                                        JLabel displayerrorbit=new JLabel("Error at the bit position ");
-                                                        JLabel displaygnrlparityrec=new JLabel("General Parity Recalculated at Receiver Side");
-                                                        JLabel correctedData=new JLabel("Data after correction by using Invertion Technique ");
-                                                        JLabel displayrecdata=new JLabel("Data Received  ");
-                                                        JLabel result=new JLabel(" Result is ");
-                                                        data_receiver=data_received.getText();
-                                                    
-                                                        System.out.println("Data Entered By Receiver");
-                                                        data_receiver_arr=new int[data_receiver.length()];
-                                                        data_receiver_parity=new int[noofredbits];
-                                                        data_receiver_data=new int[noofbits];
-                                                        for(int i=0;i<data_receiver_arr.length;i++){
-                                                            data_receiver_arr[i]=Character.getNumericValue(data_receiver.charAt(i));
-                                                            System.out.print(data_receiver_arr[i]);
-                                                            displayrecdata.setText(displayrecdata.getText()+data_receiver_arr[i]+" ");
-                                                        }
-                                                        int k_redind=0;int dataind=0;
-                                                        for(int i=1;i<=data_receiver_arr.length;i++){
-                                                            if(i==1 || checkPowerOfTwo(i)){
-                                                                data_receiver_parity[k_redind]=data_receiver_arr[i-1];
-                                                                System.out.println("i is  "+i+" PA "+ data_receiver_parity[k_redind]);
-                                                                k_redind+=1;
-                                                            }
-                                                            else{
-                                                                data_receiver_data[dataind]=data_receiver_arr[i-1];
-                                                                System.out.println("i is  "+i+" PD "+   data_receiver_data[dataind]);
-                                                                dataind+=1;
-                                                            }
-                                                        }
-                                                        ded_received=addDedBit(data_receiver_arr,parchoice);
-                                                        System.out.println("Recalculated DED bit at receiver side is "+ded_received);
-                                                        displaygnrlparityrec.setText(displaygnrlparityrec.getText()+ded_received);
-                                                        checkparity=new int[noofredbits];
-                                                        checkparity=checkReceivedParity(data_receiver_parity,data_receiver_arr,data_receiver_parity.length,parchoice);
-                                                        decimal_error_bit=BinaryToDecimal(checkparity);
-                                                        System.out.println("Error bit is "+decimal_error_bit);
-                                                        displayrecdata.setFont(new Font("Verdana", Font.BOLD, 18));
-                                                        displaygnrlparityrec.setFont(new Font("Verdana", Font.BOLD, 18));
-                                                        result.setFont(new Font("Verdana", Font.BOLD, 18));
-                                                        frame.getContentPane().add(displayrecdata);
-                                                        frame.getContentPane().add(displaygnrlparityrec);
-                                                        result.setForeground(new Color(0,0,255));
-                                                        frame.getContentPane().add(result);
-                                                        frame.pack();
-
-                                                        if(ded_received==dedbit_sender && decimal_error_bit==0 ){
-                                                            System.out.println("NO ERROR");
-                                                            result.setText(result.getText()+"NO ERROR ");
-                                                        } 
-                                                        else if(ded_received==dedbit_sender && decimal_error_bit!=0 ){
-                                                            System.out.println("DED --> Double Bit Error Detected and Cannot be Corrected");
-                                                            result.setText(result.getText()+"DED --> Double Bit Error Detected and Cannot be Corrected ");
-                                                        }
-                                                
-                                                        else if(ded_received!=dedbit_sender && decimal_error_bit!=0){
-                                                            displayerrorbit.setText(displayerrorbit.getText()+decimal_error_bit);
-                                                            result.setText(result.getText()+"SEDC --> Single Bit Error Detected and Corrected ");
-                                                            if(data_receiver_arr[decimal_error_bit-1]==0){
-                                                                data_receiver_arr[decimal_error_bit-1]=1;
-                                                            }
-                                                            else{
-                                                                data_receiver_arr[decimal_error_bit-1]=0;
-                                                            }
-                                                            System.out.println("Corrected Error bit is by invertion");
+                                                            JLabel displayerrorbit=new JLabel("Error at the bit position ");
+                                                            JLabel displaygnrlparityrec=new JLabel("General Parity Recalculated at Receiver Side");
+                                                            JLabel correctedData=new JLabel("Data after correction by using Invertion Technique ");
+                                                            JLabel displayrecdata=new JLabel("Data Received  ");
+                                                            JLabel result=new JLabel(" Result is ");
+                                                            data_receiver=data_received.getText();
+                                                        
+                                                            System.out.println("Data Entered By Receiver");
+                                                            data_receiver_arr=new int[data_receiver.length()];
+                                                            data_receiver_parity=new int[noofredbits];
+                                                            data_receiver_data=new int[noofbits];
                                                             for(int i=0;i<data_receiver_arr.length;i++){
+                                                                data_receiver_arr[i]=Character.getNumericValue(data_receiver.charAt(i));
                                                                 System.out.print(data_receiver_arr[i]);
-                                                                correctedData.setText(correctedData.getText()+data_receiver_arr[i]+" ");
-                                                            }  
-                                                            System.out.println();
-                                                            displayerrorbit.setFont(new Font("Verdana", Font.BOLD, 18));
-                                                            frame.getContentPane().add(displayerrorbit);
-                                                            correctedData.setFont(new Font("Verdana", Font.BOLD, 18));
-                                                            frame.getContentPane().add(correctedData);
+                                                                displayrecdata.setText(displayrecdata.getText()+data_receiver_arr[i]+" ");
+                                                            }
+                                                            int k_redind=0;int dataind=0;
+                                                            for(int i=1;i<=data_receiver_arr.length;i++){
+                                                                if(i==1 || checkPowerOfTwo(i)){
+                                                                    data_receiver_parity[k_redind]=data_receiver_arr[i-1];
+                                                                    System.out.println("i is  "+i+" PA "+ data_receiver_parity[k_redind]);
+                                                                    k_redind+=1;
+                                                                }
+                                                                else{
+                                                                    data_receiver_data[dataind]=data_receiver_arr[i-1];
+                                                                    System.out.println("i is  "+i+" PD "+   data_receiver_data[dataind]);
+                                                                    dataind+=1;
+                                                                }
+                                                            }
+                                                            ded_received=addDedBit(data_receiver_arr,parchoice);
+                                                            System.out.println("Recalculated DED bit at receiver side is "+ded_received);
+                                                            displaygnrlparityrec.setText(displaygnrlparityrec.getText()+ded_received);
+                                                            checkparity=new int[noofredbits];
+                                                            checkparity=checkReceivedParity(data_receiver_parity,data_receiver_arr,data_receiver_parity.length,parchoice);
+                                                            decimal_error_bit=BinaryToDecimal(checkparity);
+                                                            System.out.println("Error bit is "+decimal_error_bit);
+                                                            displayrecdata.setFont(new Font("Verdana", Font.BOLD, 18));
+                                                            displaygnrlparityrec.setFont(new Font("Verdana", Font.BOLD, 18));
+                                                            result.setFont(new Font("Verdana", Font.BOLD, 18));
+                                                            frame.getContentPane().add(displayrecdata);
+                                                            frame.getContentPane().add(displaygnrlparityrec);
+                                                            result.setForeground(new Color(0,0,255));
+                                                            frame.getContentPane().add(result);
                                                             frame.pack();
-                                                        }
+
+                                                            if(ded_received==dedbit_sender && decimal_error_bit==0 ){
+                                                                System.out.println("NO ERROR");
+                                                                result.setText(result.getText()+"NO ERROR ");
+                                                            } 
+                                                            else if(ded_received==dedbit_sender && decimal_error_bit!=0 ){
+                                                                System.out.println("DED --> Double Bit Error Detected and Cannot be Corrected");
+                                                                result.setText(result.getText()+"DED --> Double Bit Error Detected and Cannot be Corrected ");
+                                                            }
+                                                    
+                                                            else if(ded_received!=dedbit_sender && decimal_error_bit!=0){
+                                                                displayerrorbit.setText(displayerrorbit.getText()+decimal_error_bit);
+                                                                result.setText(result.getText()+"SEDC --> Single Bit Error Detected and Corrected ");
+                                                                if(data_receiver_arr[decimal_error_bit-1]==0){
+                                                                    data_receiver_arr[decimal_error_bit-1]=1;
+                                                                }
+                                                                else{
+                                                                    data_receiver_arr[decimal_error_bit-1]=0;
+                                                                }
+                                                                System.out.println("Corrected Error bit is by invertion");
+                                                                for(int i=0;i<data_receiver_arr.length;i++){
+                                                                    System.out.print(data_receiver_arr[i]);
+                                                                    correctedData.setText(correctedData.getText()+data_receiver_arr[i]+" ");
+                                                                }  
+                                                                System.out.println();
+                                                                displayerrorbit.setFont(new Font("Verdana", Font.BOLD, 18));
+                                                                frame.getContentPane().add(displayerrorbit);
+                                                                correctedData.setFont(new Font("Verdana", Font.BOLD, 18));
+                                                                frame.getContentPane().add(correctedData);
+                                                                frame.pack();
+                                                            }
                                                         }
                                                     }
                                                 );
