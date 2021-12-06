@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;    
+import javax.swing.JScrollPane;
 import javax.swing.JOptionPane;
 public class CRCGUI {
     // global_n --> Power of Generating Polynomial
@@ -302,6 +303,10 @@ public class CRCGUI {
         boolean flag=true;
         JTextField textfieldarr[]=new JTextField[no+1];
         JLabel labelarr[]=new JLabel[no+1];
+        JPanel coeffpanel=new JPanel();
+        JScrollPane scrollablearea= new JScrollPane(coeffpanel,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollablearea.setLayout(new ScrollPaneLayout());
+        coeffpanel.setPreferredSize(new Dimension(10000,4000));
         int xc=100; int yc=60;
             for(int i=0;i<=number_backup;i++){
                 String x=form+" ^ "+no +" : ";
@@ -312,19 +317,28 @@ public class CRCGUI {
                 l.setBounds(xc,yc,200,40);
                 coeff_tf.setBounds(xc+100,yc,100,40);
                 l.setFont(new Font("Verdana", Font.BOLD, 18));
-                f.getContentPane().add(l);
-                f.getContentPane().add(coeff_tf);
+                //f.getContentPane().add(l);
+                //f.getContentPane().add(coeff_tf);
+                coeffpanel.add(l);
+                coeffpanel.add(coeff_tf);
                 f.pack();
                 no--;
                 yc+=100;
-                if(yc>700){
+                if(yc>3600){
                     yc=60;
                     xc+=250;
                 }
             }
         JButton bt=new JButton("Next");
         bt.setBounds(xc,yc,80,40);
-        f.getContentPane().add(bt);    
+        //f.getContentPane().add(bt);    
+        coeffpanel.add(bt);    
+        coeffpanel.setBounds(200,80,1200,600);
+        scrollablearea.setBounds(160,100,900,600);
+        coeffpanel.setLayout(null);
+        scrollablearea.setVisible(true);
+        f.getContentPane().add(scrollablearea);
+            
         f.pack();
         bt.addActionListener(
             new java.awt.event.ActionListener() {
@@ -336,6 +350,7 @@ public class CRCGUI {
                     }
                     DisplayPolynomialAndGetData();
                     for(int i=0;i<textfieldarr.length;i++){
+                        f.remove(scrollablearea);
                         f.remove(textfieldarr[i]);
                         f.remove(labelarr[i]);
                     }

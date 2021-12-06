@@ -1,6 +1,7 @@
 import java.util.*;
 import javax.swing.*;
-import java.awt.*;    
+import java.awt.*;   
+import javax.swing.JScrollPane;  
 import javax.swing.JOptionPane;
 public class CheckSumGUI{
     // frame
@@ -427,11 +428,18 @@ public class CheckSumGUI{
                     //coordinates
                     int xc=100;
                     int yc=100;
+                   
+                    JPanel senderpanel=new JPanel();
+                    JScrollPane scrollableareasend = new JScrollPane(senderpanel,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+                    scrollableareasend.setLayout(new ScrollPaneLayout());
+                    senderpanel.setPreferredSize(new Dimension(10000,4000));
+
                     // generating k textfield each of n bits
                     for(int i=0;i<no_frames;i++){
-                        String promptdata=" Enter Data for Frame "+(i+1);
+                        String promptdata="Frame "+(i+1);
                         JLabel datalabel=new JLabel(promptdata);
                         JTextField data=new JTextField(no_bits);
+                        
                         dataref[i]=data;
                         datareflab[i]=datalabel;
                         // to disable textfield once sender has typed n bits
@@ -450,21 +458,30 @@ public class CheckSumGUI{
                         //setting bounds
                         datalabel.setBounds(xc,yc,400,40);
                         datalabel.setFont(new Font("Verdana", Font.BOLD, 18));
-                        data.setBounds(xc+300,yc,200,40);
+                        data.setBounds(xc+100,yc,160,40);
                         //adding components
-                        frame.getContentPane().add(datalabel);
-                        frame.getContentPane().add(data);
+                        //frame.getContentPane().add(datalabel);
+                        //frame.getContentPane().add(data);
+                        //frame.pack();
+                        senderpanel.add(datalabel);
+                        senderpanel.add(data);
                         frame.pack();
                         yc+=100;
-                        if(yc==700){
-                            yc+=100;
-                            xc+=100;
+                        if(yc>3600){
+                            yc=100;
+                            xc+=300;
                         }
                     }
+                    senderpanel.setBounds(100,100,1200,600);
+                    scrollableareasend.setBounds(100,100,900,600);
+                    senderpanel.setLayout(null);
+                    scrollableareasend.setVisible(true);
+                    frame.getContentPane().add(scrollableareasend);
+                    frame.pack();
                     //setting bounds and adding component
                     nextbt_data.setFont(new Font("Verdana", Font.BOLD, 18));
                     nextbt_data.setBounds(xc,yc,200,40);
-                    frame.getContentPane().add(nextbt_data);
+                    senderpanel.add(nextbt_data);
                     // after ending k data frames
                     nextbt_data.addActionListener(
                         new java.awt.event.ActionListener() {
@@ -475,8 +492,10 @@ public class CheckSumGUI{
                                 frame.getContentPane().remove(datareflab[i]);
                                 frame.pack();
                                 }
-                                 frame.getContentPane().remove(nextbt_data);
-                                 frame.pack();
+                                frame.getContentPane().remove(nextbt_data);
+                                 
+                                frame.getContentPane().remove(scrollableareasend);
+                                frame.pack();
                                 // Data collected from sender being stored into string arr
                                 System.out.println("Data collected from sender");
                                 for(int i=0;i<dataref.length;i++){
@@ -518,9 +537,13 @@ public class CheckSumGUI{
                                         frame.getContentPane().add(labelrecprompt);
                                         int xc=200,yc=200;
                                         JTextField datareceive[]=new JTextField[no_frames];
+                                        JPanel receiverpanel=new JPanel();
+                                        JScrollPane scrollableareareceive= new JScrollPane(receiverpanel,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+                                        scrollableareareceive.setLayout(new ScrollPaneLayout());
+                                        receiverpanel.setPreferredSize(new Dimension(10000,4000));
                                         // generating k textfield each of n bits --> To get data received
                                         for(int i=0;i<no_frames;i++){
-                                            String promptdata=" Enter Data for Frame "+(i+1);
+                                            String promptdata="Frame "+(i+1);
                                             JLabel datalabel=new JLabel(promptdata);
                                             JTextField data=new JTextField(no_bits);
                                             datareceive[i]=data;
@@ -538,22 +561,31 @@ public class CheckSumGUI{
                                                 }
                                             ); 
                                             //setting bounds and adding component
-                                            datalabel.setBounds(xc,yc,400,40);
+                                            datalabel.setBounds(xc,yc,200,40);
                                             datalabel.setFont(new Font("Verdana", Font.BOLD, 18));
-                                            data.setBounds(xc+300,yc,200,40);
-                                            frame.getContentPane().add(datalabel);
-                                            frame.getContentPane().add(data);
+                                            data.setBounds(xc+100,yc,160,40);
+                                            //frame.getContentPane().add(datalabel);
+                                            //frame.getContentPane().add(data);
+                                            //frame.pack();
+                                            receiverpanel.add(datalabel);
+                                            receiverpanel.add(data);
                                             frame.pack();
                                             yc+=100;
-                                            if(yc==700){
-                                                yc+=100;
-                                                xc+=100;
+                                            if(yc>3600){
+                                                yc=100;
+                                                xc+=300;
                                             }
                                         }
+                                        receiverpanel.setBounds(100,100,1200,600);
+                                        scrollableareareceive.setBounds(100,100,900,600);
+                                        receiverpanel.setLayout(null);
+                                        scrollableareareceive.setVisible(true);
+                                        frame.getContentPane().add(scrollableareareceive);
+                                        frame.pack();
                                         //setting bounds and adding component
                                         JButton nextres=new JButton("Check Error");
                                         nextres.setBounds(xc,yc,200,40);
-                                        frame.getContentPane().add(nextres);
+                                        receiverpanel.add(nextres);
                                         frame.pack();
                                         // Initialising array 
                                         data_arr_reciever=new long[no_frames+1];
@@ -651,7 +683,7 @@ public class CheckSumGUI{
                                                                 result.setText(result.getText()+" NO ERROR");
 
                                                             }
-                                                            result.setBounds(800,500,2000,80);
+                                                            result.setBounds(10,10,800,80);
                                                             result.setFont(new Font("Verdana", Font.BOLD, 18));
                                                             result.setForeground(new Color(0,0,255));
                                                             frame.getContentPane().add(result);
