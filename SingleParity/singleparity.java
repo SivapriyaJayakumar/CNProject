@@ -75,7 +75,7 @@ public class singleparity{
         //frame --> Setting title
         frame=new JFrame("Error Detector - Single Parity");
         //nprompt --> Setting label
-        JLabel nprompt=new JLabel("Enter no of Data Bits");
+        JLabel nprompt=new JLabel(" Enter no of Data Bits");
         //ntextbox --> Setting textfield
         JTextField ntextbox=new JTextField(40);
         //next --> Setting button
@@ -194,14 +194,18 @@ public class singleparity{
                                             JButton checkerr=new JButton("Check Error");
                                             // adding elements to frame
                                             displaychosenparity.setMaximumSize(new Dimension(2000,40));
-                                            frame.getContentPane().add(displaychosenparity);
+                                            displaychosenparity.setFont(new Font("Verdana", Font.BOLD, 18));
                                             datatobesent.setMaximumSize(new Dimension(2000,40));
-                                            frame.getContentPane().add(datatobesent);
+                                            datatobesent.setFont(new Font("Verdana", Font.BOLD, 18));
                                             data_rec_label.setMaximumSize(new Dimension(2000,40));
-                                            frame.getContentPane().add(data_rec_label);
+                                            data_rec_label.setFont(new Font("Verdana", Font.BOLD, 18));
                                             data_receive.setMaximumSize(new Dimension(800,40));
-                                            frame.getContentPane().add(data_receive);
                                             checkerr.setMaximumSize(new Dimension(150,40));
+                                            checkerr.setFont(new Font("Verdana", Font.BOLD, 18));
+                                            frame.getContentPane().add(displaychosenparity);
+                                            frame.getContentPane().add(datatobesent);
+                                            frame.getContentPane().add(data_rec_label);
+                                            frame.getContentPane().add(data_receive);
                                             frame.getContentPane().add(checkerr);
                                             frame.pack();
                                             //after entering data received by receiver
@@ -232,31 +236,36 @@ public class singleparity{
                                                             if(parityeven==0){
                                                                 System.out.println("NO ERROR");
                                                                 result.setText(result.getText()+"NO ERROR");
+                                                                result.setForeground(new Color(22, 163, 74));
                                                             }
                                                             else if(parityeven==1){
                                                                 System.out.println("ERROR");
-                                                                result.setText(result.getText()+" ERROR");
+                                                                result.setText(result.getText()+" ERROR"); 
+                                                                result.setForeground(new Color(255,0,0));
                                                             }
+                                                            
                                                             break;
                                                             // if odd parity is chosen , 2nd case will be executed.
                                                             case 2:
                                                             int parityodd=calcOddParity(data_receiver_arr);
                                                             if(parityodd==0){
                                                                 System.out.println("NO ERROR");
-                                                                result.setText(result.getText()+"NO ERROR");
+                                                                result.setText(result.getText()+" NO ERROR");
+                                                                result.setForeground(new Color(22, 163, 74));
                                                             }
                                                             else if(parityodd==1){
                                                                 System.out.println("ERROR");
                                                                 result.setText(result.getText()+" ERROR");
+                                                                result.setForeground(new Color(255,0,0));
                                                             }
                                                             break;
                                                         }
                                                         //adding GUI elements
                                                         datafromrec.setMaximumSize(new Dimension(2000,40));
+                                                        datafromrec.setFont(new Font("Verdana", Font.BOLD, 18));
                                                         result.setMaximumSize(new Dimension(2000,40));
-                                                        frame.getContentPane().add(datafromrec);
-                                                        result.setForeground(new Color(0,0,255));
                                                         result.setFont(new Font("Verdana", Font.BOLD, 18));
+                                                        frame.getContentPane().add(datafromrec);
                                                         frame.getContentPane().add(result);
                                                         frame.pack();
 
@@ -267,22 +276,32 @@ public class singleparity{
                                     }
                                 );
                                 //adding GUI elements
+                                JLabel displayparprompt=new JLabel("CHOOSE PARITY");
                                 bg.add(r1);bg.add(r2); 
                                 displaydata.setMaximumSize(new Dimension(2000,40));
-                                frame.add(displaydata);   
-                                frame.add(r1);frame.add(r2);
-                                calcparity.setMaximumSize(new Dimension(150,40));
-                                frame.add(calcparity);frame.pack();
+                                displayparprompt.setMaximumSize(new Dimension(2000,40));
+                                displayparprompt.setFont(new Font("Verdana", Font.BOLD, 18));
+                                displaydata.setFont(new Font("Verdana", Font.BOLD, 18));
+                                r1.setFont(new Font("Verdana", Font.BOLD, 18));
+                                r2.setFont(new Font("Verdana", Font.BOLD, 18));
+                                calcparity.setFont(new Font("Verdana", Font.BOLD, 18));
+                                calcparity.setMaximumSize(new Dimension(250,40));
+                                frame.getContentPane().add(displaydata);   
+                                frame.getContentPane().add(displayparprompt);
+                                frame.getContentPane().add(r1);frame.getContentPane().add(r2);
+                                frame.getContentPane().add(calcparity);frame.pack();
                             }
                         }
 
                     );
                     //adding GUI elements
                     enterdataprompt.setMaximumSize(new Dimension(2000,40));
-                    frame.getContentPane().add(enterdataprompt);
+                    enterdataprompt.setFont(new Font("Verdana", Font.BOLD, 18));
                     data_send.setMaximumSize(new Dimension(800,40));
-                    frame.getContentPane().add(data_send);
                     nextbt_data.setMaximumSize(new Dimension(150,40));
+                    nextbt_data.setFont(new Font("Verdana", Font.BOLD, 18));
+                    frame.getContentPane().add(enterdataprompt);
+                    frame.getContentPane().add(data_send);
                     frame.getContentPane().add(nextbt_data);
                     frame.pack();
                 }
@@ -290,10 +309,12 @@ public class singleparity{
         );
         //adding GUI elements
         nprompt.setMaximumSize(new Dimension(2000,40));
-        frame.getContentPane().add(nprompt);
+        nprompt.setFont(new Font("Verdana", Font.BOLD, 18));
         ntextbox.setMaximumSize(new Dimension(800,40));
-        frame.getContentPane().add(ntextbox);
         next.setMaximumSize(new Dimension(150,40));
+        next.setFont(new Font("Verdana", Font.BOLD, 18));
+        frame.getContentPane().add(nprompt);
+        frame.getContentPane().add(ntextbox);
         frame.getContentPane().add(next);
         frame.pack();
         //setting frame properties

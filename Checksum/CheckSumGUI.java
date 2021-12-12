@@ -675,12 +675,12 @@ public class CheckSumGUI{
                                                             }
                                                             if(flag_checksum==true){
                                                                 System.out.println("RESULT IS ERROR");
-                                                                result.setText(result.getText()+" ERROR");
+                                                                result.setText(result.getText()+"  ERROR");
                                                                 
                                                             }
                                                             else if(flag_checksum==false){
                                                                 System.out.println(" RESULT IS NO ERROR");
-                                                                result.setText(result.getText()+" NO ERROR");
+                                                                result.setText(result.getText()+"  NO ERROR");
 
                                                             }
                                                             result.setBounds(10,10,800,80);

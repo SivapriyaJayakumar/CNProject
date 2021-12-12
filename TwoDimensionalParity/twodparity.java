@@ -222,7 +222,7 @@ public class twodparity{
         JLabel divider=new JLabel(" | ");
         
         //frame --> Setting title
-        frame=new JFrame("Error Detector - Single Parity");
+        frame=new JFrame("Error Detector - Two Dimensional Parity");
         //kprompt --> Setting label
         JLabel kprompt=new JLabel("Enter no of frames ( K ) ");
         //nprompt --> Setting label
@@ -271,6 +271,9 @@ public class twodparity{
                     }
                     // nextbt_data --> setting button
                     JButton nextbt_data=new JButton("Next");
+                    JPanel datasendpanel=new JPanel();
+                    JPanel op=new JPanel();
+                    JScrollPane scrollablearea=new JScrollPane(datasendpanel,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
                     //to disable textfield once sender has typed n bits
                     
                     // after entering data
@@ -279,10 +282,9 @@ public class twodparity{
                             public void actionPerformed(java.awt.event.ActionEvent e){
                                 //removing previously added elements
                                 frame.getContentPane().remove(enterdataprompt);
-                                for( int i=0;i<k;i++){
-                                    frame.getContentPane().remove(dataframerefsend[i]);
-                                    frame.pack();
-                                }
+                                frame.getContentPane().remove(op);
+                                frame.pack();
+                                
                                 frame.getContentPane().remove(nextbt_data);
                                 frame.pack();
                                 // displaydata --> setting label to display data
@@ -398,19 +400,43 @@ public class twodparity{
                                             JButton checkerr=new JButton("Check Error");
                                             // adding elements to frame
                                             displaychosenparity.setMaximumSize(new Dimension(2000,40));
+                                            displaychosenparity.setFont(new Font("Verdana", Font.BOLD, 14));
                                             datatobesent.setMaximumSize(new Dimension(2000,40));
+                                            datatobesent.setFont(new Font("Verdana", Font.BOLD, 14));
+                                            data_rec_label.setFont(new Font("Verdana", Font.BOLD, 14));
                                             data_rec_label.setMaximumSize(new Dimension(2000,40));
                                             frame.getContentPane().add(displaychosenparity);
                                             frame.getContentPane().add(datatobesent);
                                             frame.getContentPane().add(data_rec_label);
                                             frame.pack();
+                                            JPanel op1=new JPanel();
+                                            JPanel bp2=new JPanel();
+                                            bp2.setBorder(BorderFactory.createEmptyBorder(50, 10, 10, 10));
+                                            bp2.setLayout(new BoxLayout(bp2,BoxLayout.Y_AXIS));
+                                            JPanel datarecpanel=new JPanel();
+                                            JScrollPane scrollablearea1=new JScrollPane(datarecpanel,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
                                             for(int i=0;i<k+1;i++){
                                                 dataframerefreceive[i].setMaximumSize(new Dimension(800,40));
-                                                frame.getContentPane().add(dataframerefreceive[i]);
+                                                datarecpanel.add(dataframerefreceive[i]);
                                                 frame.pack();
                                             }
-                                            checkerr.setMaximumSize(new Dimension(150,40));
-                                            frame.getContentPane().add(checkerr);
+                                            datarecpanel.setPreferredSize(new Dimension(400,10000));
+                                            op1.setBorder(BorderFactory.createEmptyBorder(50, 150, 50, 150));
+                                            scrollablearea1.setPreferredSize(new Dimension(800,400));
+                                            op1.setPreferredSize(new Dimension(900,400));
+                                            scrollablearea1.setLayout(new ScrollPaneLayout());
+                                            bp2.setPreferredSize(new Dimension(200,200));
+                                            datarecpanel.setLayout(new BoxLayout(datarecpanel,BoxLayout.Y_AXIS));
+                                            op1.setLayout(new BoxLayout(op1,BoxLayout.Y_AXIS));
+                                            scrollablearea1.setVisible(true);
+                                            op1.setBackground(new Color(254,243,199));
+                                            op1.add(scrollablearea1);
+                                            op1.add(bp2);
+                                            bp2.setBackground(new Color(254,243,199));
+                                            frame.getContentPane().add(op1);
+                                            checkerr.setFont(new Font("Verdana", Font.BOLD, 14));
+                                            checkerr.setMaximumSize(new Dimension(250,40));
+                                            bp2.add(checkerr);
                                             frame.pack();
                                             //after entering data received by receiver
                                             checkerr.addActionListener(
@@ -489,18 +515,20 @@ public class twodparity{
                                                         if(colparity_flag && rowparity_flag){
                                                             System.out.println("NO ERROR");
                                                             result.setText(result.getText()+" NO ERROR ");
+                                                            result.setForeground(new Color(22, 163, 74));
                                                         }
                                                         else if(colparity_flag!=true && rowparity_flag!=true){
                                                             System.out.println("ERROR");
                                                             result.setText(result.getText()+"  ERROR ");
+                                                            result.setForeground(new Color(255, 0, 0));
                                                         }
                                                         //adding GUI elements
                                                         datafromrec.setMaximumSize(new Dimension(2000,40));
+                                                        datafromrec.setFont(new Font("Verdana", Font.BOLD, 14));
                                                         result.setMaximumSize(new Dimension(2000,40));
-                                                        frame.getContentPane().add(datafromrec);
-                                                        result.setForeground(new Color(0,0,255));
-                                                        result.setFont(new Font("Verdana", Font.BOLD, 18));
-                                                        frame.getContentPane().add(result);
+                                                        datarecpanel.add(datafromrec);
+                                                        result.setFont(new Font("Verdana", Font.BOLD, 14));
+                                                        datarecpanel.add(result);
                                                         frame.pack();
 
                                                     }
@@ -512,45 +540,71 @@ public class twodparity{
                                 //adding GUI elements
                                 bg.add(r1);bg.add(r2); 
                                 displaydata.setMaximumSize(new Dimension(2000,40));
+                                displaydata.setFont(new Font("Verdana", Font.BOLD, 14));
+                                r1.setFont(new Font("Verdana", Font.BOLD, 14));
+                                r2.setFont(new Font("Verdana", Font.BOLD, 14));
                                 frame.add(displaydata);   
                                 frame.add(r1);frame.add(r2);
-                                calcparity.setMaximumSize(new Dimension(150,40));
+                                calcparity.setFont(new Font("Verdana", Font.BOLD, 14));
+                                calcparity.setMaximumSize(new Dimension(250,40));
                                 frame.add(calcparity);frame.pack();
                             }
                         }
 
                     );
                     //adding GUI elements
-                    enterdataprompt.setMaximumSize(new Dimension(2000,40));
-                    frame.getContentPane().add(enterdataprompt);
                     for(int i=0;i<k;i++){
                         dataframerefsend[i].setMaximumSize(new Dimension(800,40));
-                        frame.getContentPane().add(dataframerefsend[i]);
+                        datasendpanel.add(dataframerefsend[i]);
                         frame.pack();
                     }
-                    nextbt_data.setMaximumSize(new Dimension(150,40));
-                    frame.getContentPane().add(nextbt_data);
+                    JPanel bp1=new JPanel();
+                    enterdataprompt.setMaximumSize(new Dimension(2000,40));
+                    enterdataprompt.setFont(new Font("Verdana", Font.BOLD, 14));
+                    frame.getContentPane().add(enterdataprompt);
+                    datasendpanel.setPreferredSize(new Dimension(400,10000));
+                    op.setBorder(BorderFactory.createEmptyBorder(50, 150, 50, 150));
+                    bp1.setBorder(BorderFactory.createEmptyBorder(50, 10, 10, 10));
+                    op.setLayout(new BoxLayout(op,BoxLayout.Y_AXIS));
+                    bp1.setLayout(new BoxLayout(bp1,BoxLayout.Y_AXIS));
+                    scrollablearea.setPreferredSize(new Dimension(800,400));
+                    op.setPreferredSize(new Dimension(900,400));
+                    bp1.setPreferredSize(new Dimension(200,200));
+                    scrollablearea.setLayout(new ScrollPaneLayout());
+                    datasendpanel.setLayout(new BoxLayout(datasendpanel,BoxLayout.Y_AXIS));
+                    scrollablearea.setVisible(true);
+                    op.add(scrollablearea);
+                    op.add(bp1);
+                    op.setBackground(new Color(254,243,199));
+                    bp1.setBackground(new Color(254,243,199));
+                    frame.getContentPane().add(op);
+                    nextbt_data.setMaximumSize(new Dimension(190,40));
+                    nextbt_data.setFont(new Font("Verdana",Font.BOLD, 14));
+                    bp1.add(nextbt_data);
                     frame.pack();
                 }
             }
         );
         //adding GUI elements
         kprompt.setMaximumSize(new Dimension(2000,40));
+        kprompt.setFont(new Font("Verdana", Font.BOLD, 14));
         frame.getContentPane().add(kprompt);
         ktextbox.setMaximumSize(new Dimension(800,40));
         frame.getContentPane().add(ktextbox);
         nprompt.setMaximumSize(new Dimension(2000,40));
+        nprompt.setFont(new Font("Verdana", Font.BOLD, 14));
         frame.getContentPane().add(nprompt);
         ntextbox.setMaximumSize(new Dimension(800,40));
         frame.getContentPane().add(ntextbox);
-        next.setMaximumSize(new Dimension(150,40));
+        next.setMaximumSize(new Dimension(90,40));
+        next.setFont(new Font("Verdana", Font.BOLD, 14));
         frame.getContentPane().add(next);
         frame.pack();
         //setting frame properties
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setBackground(new Color(254,243,199));
         frame.setResizable(true);            
-        frame.getContentPane().setPreferredSize(new Dimension(600,600));
+        frame.getContentPane().setPreferredSize(new Dimension(1200,800));
         frame.setLocationRelativeTo(null);
         BoxLayout layout=new BoxLayout(frame.getContentPane(),BoxLayout.Y_AXIS);
         frame.setLayout(layout);
@@ -562,6 +616,7 @@ public class twodparity{
     //creating object for class and calling BuildGUI
     twodparity obj=new twodparity();
     obj.BuildGUI();
+    }
     /*
     Scanner scan=new Scanner(System.in);
     System.out.println("Enter K");
@@ -678,8 +733,8 @@ public class twodparity{
     else if(colparity_flag!=true && rowparity_flag!=true){
         System.out.println("ERROR");
     }
-    */
+    
 
-    }
+    }*/
 
 }
