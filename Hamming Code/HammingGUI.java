@@ -423,15 +423,18 @@ public class HammingGUI{
                                                             if(ded_received==dedbit_sender && decimal_error_bit==0 ){
                                                                 System.out.println("NO ERROR");
                                                                 result.setText(result.getText()+"NO ERROR ");
+                                                                result.setForeground(new Color(22, 163, 74));
                                                             } 
                                                             else if(ded_received==dedbit_sender && decimal_error_bit!=0 ){
                                                                 System.out.println("DED --> Double Bit Error Detected and Cannot be Corrected");
                                                                 result.setText(result.getText()+"DED --> Double Bit Error Detected and Cannot be Corrected ");
+                                                                result.setForeground(new Color(255, 0, 0));
                                                             }
                                                     
                                                             else if(ded_received!=dedbit_sender && decimal_error_bit!=0){
                                                                 displayerrorbit.setText(displayerrorbit.getText()+decimal_error_bit);
                                                                 result.setText(result.getText()+"SEDC --> Single Bit Error Detected and Corrected ");
+                                                                result.setForeground(new Color(255, 0, 0));
                                                                 if(data_receiver_arr[decimal_error_bit-1]==0){
                                                                     data_receiver_arr[decimal_error_bit-1]=1;
                                                                 }
@@ -445,6 +448,7 @@ public class HammingGUI{
                                                                 }  
                                                                 System.out.println();
                                                                 displayerrorbit.setFont(new Font("Verdana", Font.BOLD, 18));
+                                                                correctedData.setForeground(new Color(22, 163, 74));
                                                                 frame.getContentPane().add(displayerrorbit);
                                                                 correctedData.setFont(new Font("Verdana", Font.BOLD, 18));
                                                                 frame.getContentPane().add(correctedData);

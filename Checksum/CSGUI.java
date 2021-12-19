@@ -1,9 +1,10 @@
 import java.util.*;
 import javax.swing.*;
 import java.awt.*;   
+import java.math.BigInteger;
 import javax.swing.JScrollPane;  
 import javax.swing.JOptionPane;
-public class CheckSumGUI{
+public class CSGUI{
     // frame
     JFrame frame;
     // no of frames --> Textfield
@@ -23,25 +24,25 @@ public class CheckSumGUI{
     // data_received --> String arr to store data from receiver 
     String data_received[];
     // data_arr_sender --> long arr to store data from sender 
-    long data_arr_sender[];
+    BigInteger data_arr_sender[];
     // data_arr_reciever --> long arr to store data from receiver 
-    long data_arr_reciever[];
+    BigInteger data_arr_reciever[];
     // checskum_receiver --> long arr to store complement of sum at receiver side
-    long checksum_receiver[];
+    BigInteger checksum_receiver[];
     // no_bits --> int 
     int no_bits=0;
     //checksum --> long arr to calculate checksum at sender side
-    long checksum[];
+    BigInteger checksum[];
     //csum --> to store intermediate checksum value at sender side
-    long csum;
+    BigInteger csum;
     //value --> to store intermediate checksum value at receiver side
-    long value;
+    BigInteger value;
     //finalsum --> to store extracted sum in case of overflow
-    long finalsum;
+    BigInteger finalsum;
     //finalcarry --> to store extracted carry in case of overflow
-    long finalcarry;
+    BigInteger finalcarry;
     //totalsum --> to store final sum sender
-    long totalsum=0;
+    BigInteger totalsum=BigInteger.ZERO;
 
     /*
     complement Method
@@ -50,17 +51,17 @@ public class CheckSumGUI{
         if data is 1 , invert it to 0 and vice versa thereby finding complement of data. 
         Example : Data is "1001" and Complement is "0110".
     */
-    public long[] complement(long data[]){
+    public BigInteger[] complement(BigInteger data[]){
         //result to be returned
-        long res[]=new long[data.length];
+        BigInteger res[]=new BigInteger[data.length];
         System.out.println("Complement is");
         for(int i=0;i<data.length;i++){
-            if(data[i]==1){
-                res[i]=0;
+            if(data[i].equals(BigInteger.ONE)){
+                res[i]=BigInteger.ZERO;
                 System.out.print(res[i]+" ");
             }
-            else if(data[i]==0){
-                res[i]=1;
+            else if(data[i].equals(BigInteger.ZERO)){
+                res[i]=BigInteger.ONE;
                 System.out.print(res[i]+" ");
             }
         }
@@ -72,12 +73,12 @@ public class CheckSumGUI{
     Description : Find Checksum by Complementing the sum of data units
         
     */
-    public long[] findChecksum(String totalsum,int n){
+    public BigInteger[] findChecksum(String totalsum,int n){
         System.out.println("Checksum called");
         //sum array --> to store bits by extracting from string.
-        long sum[]=new long[n];
+        BigInteger sum[]=new BigInteger[n];
         // complementofsum --> long arr to be returned.
-        long complementofsum[]=new long[n];
+        BigInteger complementofsum[]=new BigInteger[n];
         System.out.println("Sum is ");
         //diff --> difference between string's length and n 
         // For Example : If the sum is "001100", while conveting it into long it will truncate the zero in the front leaving sum as "1100".
@@ -88,14 +89,14 @@ public class CheckSumGUI{
             diff=n-totalsum.length();
             int i=0;
             for(i=0;i<diff;i++){
-                complementofsum[i]=1;
+                complementofsum[i]=BigInteger.ONE;
                 System.out.println(complementofsum[i]);
                 System.out.println(i+" is i ");
             }
             //strind --> to keep track of index of string.
             int strind=0;
             for(int j=i;j<n;j++){
-                sum[j]=Character.getNumericValue(totalsum.charAt(strind));
+                sum[j]=BigInteger.valueOf(Character.getNumericValue(totalsum.charAt(strind)));
                 System.out.print(sum[j]+" ");
                 strind++;
             }
@@ -104,7 +105,7 @@ public class CheckSumGUI{
         else{
             int strind=0;
             for(int j=0;j<n;j++){
-                sum[j]=Character.getNumericValue(totalsum.charAt(strind));
+                sum[j]=BigInteger.valueOf(Character.getNumericValue(totalsum.charAt(strind)));
                 System.out.print(sum[j]+" ");
                 strind++;
             }
@@ -113,12 +114,12 @@ public class CheckSumGUI{
         //Finding and Printing complement of sum from diff to n (from 0 to n incase of sum's length=n and from diff to n incase of sum's length<n)
         System.out.println("Complement of sum is ");
         for(int i=diff;i<n;i++){
-            if(sum[i]==1){
-                complementofsum[i]=0;
+            if(sum[i].equals(BigInteger.ONE)){
+                complementofsum[i]=BigInteger.ZERO;
                 System.out.print(complementofsum[i]+" ");
             }
-            else if(sum[i]==0){
-                complementofsum[i]=1;
+            else if(sum[i].equals(BigInteger.ZERO)){
+                complementofsum[i]=BigInteger.ONE;
                 System.out.print(complementofsum[i]+" ");
             }
         }
@@ -132,35 +133,35 @@ public class CheckSumGUI{
     Description : Find Summation of 2 binary numbers
         
     */
-    public long binaryAddition(long op1,long op2,int n,int k){
-        long backop1=op1;long backop2=op2;
+    public BigInteger binaryAddition(BigInteger op1,BigInteger op2,int n,int k){
+        BigInteger backop1=op1;BigInteger backop2=op2;
         System.out.println("OP 1 "+op1);
         System.out.println("OP 2 "+op2);
         int i=0;
         //remainder --> Initially 0.
-        long remainder=0;
+        BigInteger remainder=BigInteger.ZERO;
         //sumval --> Initially "".
         String sumval="";
         //sumValue --> Initially 0.
-        long sumValue=0;
+        BigInteger sumValue=BigInteger.ZERO;
         //sum --> array to store sum of binary numbers
-        long sum[]=new long[n+n];
+        BigInteger sum[]=new BigInteger[n+n];
    
         // Summation Logic --> Until both operands becomes zero, extracting the digits and adding it storing it to sum and dividing operand by 10.
-        while(op1!=0 || op2!=0){
+        while(op1!=BigInteger.ZERO || op2!=BigInteger.ZERO){
             //Extracting ith digits and adding it
-            long intermideate_res= (op1 % 10 + op2 % 10 + remainder);
+            BigInteger intermideate_res= (op1 .mod(BigInteger.valueOf(10)) .add(op2.mod(BigInteger.valueOf(10))) ).add(remainder);
             //dividing it by % 2
-            sum[i]=intermideate_res % 2;
+            sum[i]=intermideate_res .mod(BigInteger.valueOf(2));
             //calc remainder
-            remainder=intermideate_res / 2;
+            remainder=intermideate_res .divide(BigInteger.valueOf(2));
             //dividing operands by 10
-            op1=op1/10;
-            op2=op2/10;
+            op1=op1.divide(BigInteger.valueOf(10));
+            op2=op2.divide(BigInteger.valueOf(10));
             i++;
         }
         // if remainder is not equal to zero
-        if(remainder!=0){
+        if(remainder!=BigInteger.ZERO){
             sum[i++]=remainder;
         }
         i=i-1;
@@ -169,7 +170,7 @@ public class CheckSumGUI{
             while (i >= 0) {
                 System.out.print(sum[i]);
                 //appending summation bits to sumval string 
-                sumval+=Long.toString(sum[i]);
+                sumval+=sum[i].toString();
                 //System.out.println("sumval "+sumval);
                 i--;
             }
@@ -179,9 +180,9 @@ public class CheckSumGUI{
         
         try{
         
-            if(backop1==0 && backop2==0){
+            if(backop1==BigInteger.ZERO && backop2==BigInteger.ZERO){
                 System.out.println("Both Operands are 0 ");
-                sumValue=0;
+                sumValue=BigInteger.valueOf(0);
             }
             else if(sumval.length()>n){
             //carry ind --> To find the length of carry
@@ -191,19 +192,19 @@ public class CheckSumGUI{
             //sum_extracted --> String from carryind bit to end of string
             String sum_extracted=sumval.substring(carryind);
             //finalsum --> String to Long conversion of sum
-            finalsum=Long.parseLong(sum_extracted);
+            finalsum=new BigInteger(sum_extracted);
             //finalcarry --> String to Long conversion of carry
-            finalcarry=Long.parseLong(carry);
+            finalcarry=new BigInteger(carry);
             System.out.println("Carry is "+finalcarry);
             System.out.println("Sum is "+finalsum);
             //sum -->finding sum of sum and carry
-            long inter_sum=binaryAddition(finalcarry,finalsum,sum_extracted.length(),2);
+            BigInteger inter_sum=binaryAddition(finalcarry,finalsum,sum_extracted.length(),2);
             System.out.println("Total Sum is "+inter_sum);
             sumValue=inter_sum;
         }
             else{
                 // converting sumval string to long
-                sumValue=Long.parseLong(sumval);
+                sumValue=new BigInteger(sumval);
                 System.out.println("Long type sum value "+sumValue);
                 System.out.print("\n"); 
             }
@@ -223,8 +224,8 @@ public class CheckSumGUI{
     Description : Find Summation of all data frames and checksum
         
     */
-    public long addAll(int k,int n,long data[]){
-        long sum=0;
+    public BigInteger addAll(int k,int n,BigInteger data[]){
+        BigInteger sum=BigInteger.ZERO;
         try{
             //Checksum_str --> To store checksum as string
             String Checksum_str="";
@@ -236,7 +237,7 @@ public class CheckSumGUI{
                 InitialSum+="0";
             }
             //sum --> To store sum
-            sum=Long.parseLong(InitialSum);
+            sum=new BigInteger(InitialSum);
             // Adding all data frames 
             for(int j=0;j<k;j++){
                 System.out.println("for entered : "+j);
@@ -246,7 +247,7 @@ public class CheckSumGUI{
             }
             System.out.println("end of for");
             //sum_total --> Converting final sum of data frames into string.
-            String sum_total=Long.toString(sum);
+            String sum_total=sum.toString();
             // If sum string is > n then overflow has occured.
             //Can be resolved by logic : Sum+carry=NewSum
             //Example --> 10+11=101 (1 is carry) --> 01+1=10 So, Sum is 10.
@@ -271,7 +272,7 @@ public class CheckSumGUI{
             
         }
         catch (Exception e){
-            sum=-1;
+            sum=BigInteger.valueOf(-1);
             System.out.println(e + "in addAll Method");
             JOptionPane.showMessageDialog(frame, " The Value can't be stored in long data type !  "+e.getMessage());
             frame.pack();
@@ -285,9 +286,9 @@ public class CheckSumGUI{
     Description : Find Summation of all data frames
         
     */
-    public long addDataBits(int k,int n,long data[]){
-    long csum=0;
-    long sum=0;
+    public BigInteger addDataBits(int k,int n,BigInteger data[]){
+    BigInteger csum=BigInteger.ZERO;
+    BigInteger sum=BigInteger.ZERO;
     try{
         //Checksum_str --> To store checksum as string
         String Checksum_str="";
@@ -300,7 +301,7 @@ public class CheckSumGUI{
             InitialSum+="0";
         }
         //sum --> To store sum
-        sum=Long.parseLong(InitialSum);
+        sum=new BigInteger(InitialSum);
         // Adding all data frames 
         for(int j=0;j<k;j++){
             System.out.println("for entered : "+j);
@@ -310,7 +311,7 @@ public class CheckSumGUI{
         }   
         System.out.println("for ended");    
         //sum_total --> Converting final sum of data frames into string. 
-        String sum_total=Long.toString(sum);
+        String sum_total=sum.toString();
         // If sum string is > n then overflow has occured.
         //Can be resolved by logic : Sum+carry=NewSum
         //Example --> 10+11=101 (1 is carry) --> 01+1=10 So, Sum is 10.
@@ -344,20 +345,20 @@ public class CheckSumGUI{
         //}
         System.out.println("Checksum callig from addDataBits");
         //checksum --> array to store checksum
-        checksum=new long[n];            
+        checksum=new BigInteger[n];            
         // calling findChecksum Method
         checksum=findChecksum(totalsum_str,n);
         // Converting Checksum to string
         for(int i=0;i<checksum.length;i++){
-            Checksum_str+=Long.toString(checksum[i]);
+            Checksum_str+=checksum[i].toString();
         }
         System.out.println("String checksum is"+Checksum_str);
         // converting string to long
-        csum=Long.parseLong(Checksum_str);
+        csum=new BigInteger(Checksum_str);
         System.out.println("Int returned checksum is"+csum);
     }
     catch (Exception e){
-        csum=-1;
+        csum=BigInteger.valueOf(-1);
         System.out.println(e + "in addDataBits Method");
         JOptionPane.showMessageDialog(frame, " The Value can't be stored in long data type !  "+e.getMessage());
         frame.pack();
@@ -418,7 +419,7 @@ public class CheckSumGUI{
                     System.out.println("No of Bits in each frame : "+no_bits);
                     // Initialising array 
                     data_collected=new String[no_frames];
-                    data_arr_sender=new long[no_frames];
+                    data_arr_sender=new BigInteger[no_frames];
                     // textfield references for each frame
                     JTextField dataref[]=new JTextField[no_frames];
                     // label references for each frame
@@ -507,7 +508,7 @@ public class CheckSumGUI{
                                 int datacorrect=0;
                                 for(int i=0;i<no_frames;i++){
                                     try{
-                                        data_arr_sender[i]=Long.parseLong(data_collected[i]);
+                                        data_arr_sender[i]=new BigInteger(data_collected[i]);
                                     }
                                     catch (Exception exc){
                                         datacorrect=-1;
@@ -529,7 +530,7 @@ public class CheckSumGUI{
                                     //Calculating checksum by taking the complement of summation of data frames (By calling addDataBits method) 
                                     csum=addDataBits(no_frames,no_bits,data_arr_sender);
                                     System.out.println("csum is "+ csum);
-                                    if(csum!=-1){
+                                    if(!csum.equals(BigInteger.valueOf(-1))){
                                         //setting bounds and adding component
                                         JLabel labelrecprompt=new JLabel("Enter Data Received at Receiver Side");
                                         labelrecprompt.setFont(new Font("Verdana", Font.BOLD, 18));
@@ -588,7 +589,7 @@ public class CheckSumGUI{
                                         receiverpanel.add(nextres);
                                         frame.pack();
                                         // Initialising array 
-                                        data_arr_reciever=new long[no_frames+1];
+                                        data_arr_reciever=new BigInteger[no_frames+1];
                                         data_received=new String[no_frames+1];
                                         // after getting data that has been received
                                         nextres.addActionListener(
@@ -605,7 +606,7 @@ public class CheckSumGUI{
                                                     System.out.println("Extracting receiver data into array");
                                                     for(int i=0;i<no_frames;i++){
                                                         try{
-                                                        data_arr_reciever[i]=Long.parseLong(data_received[i]);
+                                                        data_arr_reciever[i]=new BigInteger(data_received[i]);
                                                         }
                                                         catch (Exception ex){
                                                             datareccorrect=-1;
@@ -628,25 +629,25 @@ public class CheckSumGUI{
                                                         }
                                                         //Calculating sum of dataframes and checksum  (By calling addAll method) 
                                                         value=addAll(no_frames+1,no_bits,data_arr_reciever);
-                                                        if(value!=-1){
+                                                        if(!value.equals(BigInteger.valueOf(-1))){
                                                             System.out.println("return value"+value); 
-                                                            String strvalue=Long.toString(value);
+                                                            String strvalue=value.toString();
                                                             System.out.println("return value string"+strvalue); 
                                                             String final_value=strvalue;
                                                             System.out.println("final value  string"+final_value); 
                                                             //checksum_receiver --> long arr to store sum of data units and checksum calc at receiver end
-                                                            checksum_receiver=new long[no_bits];
+                                                            checksum_receiver=new BigInteger[no_bits];
                                                             // if sum of data units and checksum  is less than no_bits then zeros in front will be truncated.
                                                             //resolving that
                                                             if(final_value.length()<no_bits){
                                                                 int diff=no_bits-final_value.length();
                                                                 int strind=0;
                                                                 for(int i=0;i<diff;i++){
-                                                                    checksum_receiver[i]=0;
+                                                                    checksum_receiver[i]=BigInteger.ZERO;
                                                                     System.out.print(checksum_receiver[i]);
                                                                 }
                                                                 for(int j=diff;j<no_bits;j++){
-                                                                    checksum_receiver[j]=Character.getNumericValue(final_value.charAt(strind));
+                                                                    checksum_receiver[j]=BigInteger.valueOf(Character.getNumericValue(final_value.charAt(strind)));
                                                                     strind++;
                                                                     System.out.print(checksum_receiver[j]);
                                                                 }
@@ -655,7 +656,7 @@ public class CheckSumGUI{
                                                             // if  sum of data units and checksum  is == no_bits
                                                             else{
                                                                 for(int i=0;i<no_bits;i++){
-                                                                    checksum_receiver[i]=Character.getNumericValue(final_value.charAt(i));
+                                                                    checksum_receiver[i]=BigInteger.valueOf(Character.getNumericValue(final_value.charAt(i)));
                                                                 }
                                                             }
                                                             JLabel result = new JLabel(" THE RESULT IS : ");
@@ -665,10 +666,10 @@ public class CheckSumGUI{
                                                             // if all zeros --> no error else error
                                                             for(int i=0;i<checksum_receiver.length;i++){
                                                                 
-                                                                if(checksum_receiver[i]==0){
+                                                                if(checksum_receiver[i]==BigInteger.ZERO){
                                                                     continue;
                                                                 }
-                                                                else if(checksum_receiver[i]!=0){
+                                                                else if(checksum_receiver[i]!=BigInteger.ZERO){
                                                                     flag_checksum=true;
                                                                     break;
                                                                 }
@@ -721,7 +722,7 @@ public class CheckSumGUI{
     }
     public static void main(String args[]){
         //creating object for class and calling BuildGUI
-        CheckSumGUI checksumgui=new CheckSumGUI();
+        CSGUI checksumgui=new CSGUI();
         checksumgui.BuildGUI();
     }
 

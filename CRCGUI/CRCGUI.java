@@ -245,10 +245,13 @@ public class CRCGUI {
                                             if(detection_flag==true){
                                                 check_result.setText(check_result.getText()+" NO ERROR");
                                                 System.out.println("No Error is detected");
+                                                check_result.setForeground(new Color(22, 163, 74));
                                             }
                                             else{
                                                 check_result.setText(check_result.getText()+" ERROR DETECTED");
                                                 System.out.println("Error is detected");
+                                                check_result.setForeground(new Color(255, 0, 0));
+
                                             }
                                         
                                         
@@ -257,7 +260,6 @@ public class CRCGUI {
                                         received_info.setBounds(100,220,2000,80);
                                         received_info.setFont(new Font("Verdana", Font.BOLD,18));
                                         check_result.setFont(new Font("Verdana", Font.BOLD, 18));
-                                        check_result.setForeground(new Color(0,0,255));
                                         frame.getContentPane().remove(receiver_data_get);
                                         frame.getContentPane().remove(receiver_data_inp);
                                         frame.getContentPane().remove(checkerror_bt);
