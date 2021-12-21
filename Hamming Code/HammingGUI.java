@@ -259,6 +259,9 @@ public class HammingGUI{
                         JButton nextbt_data=new JButton("Next");
                         datalabel.setFont(new Font("Verdana", Font.BOLD, 18));
                         nextbt_data.setFont(new Font("Verdana", Font.PLAIN, 18));
+                        datalabel.setBounds(100,100,1000,80);
+                        databits.setBounds(100,180,200,40);
+                        nextbt_data.setBounds(100,260,160,40);
                         frame.getContentPane().add(datalabel);
                         frame.getContentPane().add(databits);
                         frame.getContentPane().add(nextbt_data);
@@ -306,6 +309,10 @@ public class HammingGUI{
                                     //buttongroup  
                                     ButtonGroup bg=new ButtonGroup();
                                     JButton calculateparity=new  JButton("Calculate Parity");
+                                    enterparity.setBounds(100,100,1000,80);
+                                    r1.setBounds(100,180,200,80);
+                                    r2.setBounds(100,260,200,80);
+                                    calculateparity.setBounds(100,340,160,40);
                                     frame.getContentPane().add(enterparity); 
                                     frame.getContentPane().add(r1); 
                                     frame.getContentPane().add(r2); 
@@ -315,6 +322,10 @@ public class HammingGUI{
                                     calculateparity.addActionListener(
                                         new java.awt.event.ActionListener(){
                                             public void actionPerformed(java.awt.event.ActionEvent e){
+                                                frame.getContentPane().remove(enterparity); 
+                                                frame.getContentPane().remove(r1); 
+                                                frame.getContentPane().remove(r2); 
+                                                frame.getContentPane().remove(calculateparity);
                                                 if(r1.isSelected()){
                                                     parchoice=1;
                                                     System.out.println("Choosen EVEN PARITY");
@@ -353,6 +364,8 @@ public class HammingGUI{
                                                 System.out.println();
                                                 gnrlparity.setFont(new Font("Verdana", Font.BOLD, 18));
                                                 displaydatahamming.setFont(new Font("Verdana", Font.BOLD, 18));
+                                                displaydatahamming.setBounds(100,100,10000,80);
+                                                gnrlparity.setBounds(100,180,10000,80);
                                                 frame.getContentPane().add(displaydatahamming);
                                                 frame.getContentPane().add(gnrlparity);
                                                 
@@ -366,6 +379,10 @@ public class HammingGUI{
                                     
                                                 displayRedundancyBits.setFont(new Font("Verdana", Font.BOLD, 18));
                                                 enterrecdataprompt.setFont(new Font("Verdana", Font.BOLD, 18));
+                                                displayRedundancyBits.setBounds(100,260,10000,80);
+                                                enterrecdataprompt.setBounds(100,360,10000,80);
+                                                data_received.setBounds(100,440,200,40);
+                                                data_rec_bt.setBounds(100,520,160,40);
                                                 frame.getContentPane().add(displayRedundancyBits);
                                                 frame.getContentPane().add(enterrecdataprompt);
                                                 frame.getContentPane().add(data_received);
@@ -375,6 +392,10 @@ public class HammingGUI{
                                                 data_rec_bt.addActionListener(
                                                     new java.awt.event.ActionListener() {
                                                         public void actionPerformed(java.awt.event.ActionEvent e){
+                                                            
+                                                            frame.getContentPane().remove(enterrecdataprompt);
+                                                            frame.getContentPane().remove(data_received);
+                                                            frame.getContentPane().remove(data_rec_bt);
                                                             JLabel displayerrorbit=new JLabel("Error at the bit position ");
                                                             JLabel displaygnrlparityrec=new JLabel("General Parity Recalculated at Receiver Side");
                                                             JLabel correctedData=new JLabel("Data after correction by using Invertion Technique ");
@@ -414,6 +435,11 @@ public class HammingGUI{
                                                             displayrecdata.setFont(new Font("Verdana", Font.BOLD, 18));
                                                             displaygnrlparityrec.setFont(new Font("Verdana", Font.BOLD, 18));
                                                             result.setFont(new Font("Verdana", Font.BOLD, 18));
+                                                            displayrecdata.setBounds(100,300,10000,80);
+                                                            displaygnrlparityrec.setBounds(100,380,10000,80);
+                                                            
+                                                            result.setBounds(100,440,10000,40);
+                                                            
                                                             frame.getContentPane().add(displayrecdata);
                                                             frame.getContentPane().add(displaygnrlparityrec);
                                                             result.setForeground(new Color(0,0,255));
@@ -446,13 +472,17 @@ public class HammingGUI{
                                                                     System.out.print(data_receiver_arr[i]);
                                                                     correctedData.setText(correctedData.getText()+data_receiver_arr[i]+" ");
                                                                 }  
+                                                        
                                                                 System.out.println();
+                                                                displayerrorbit.setBounds(100,520,10000,80);
+                                                                correctedData.setBounds(100,580,10000,80);
                                                                 displayerrorbit.setFont(new Font("Verdana", Font.BOLD, 18));
                                                                 correctedData.setForeground(new Color(22, 163, 74));
                                                                 frame.getContentPane().add(displayerrorbit);
                                                                 correctedData.setFont(new Font("Verdana", Font.BOLD, 18));
                                                                 frame.getContentPane().add(correctedData);
                                                                 frame.pack();
+                                                                
                                                             }
                                                         }
                                                     }
@@ -480,8 +510,12 @@ public class HammingGUI{
             }
         );
         nprompt.setFont(new Font("Verdana", Font.BOLD, 18));
+        nprompt.setBounds(100,180,1000,80);
         info.setFont(new Font("Verdana", Font.BOLD, 18));
+        info.setBounds(450,50,1000,80);
         proceedwithnbt.setFont(new Font("Verdana", Font.PLAIN, 18));
+        proceedwithnbt.setBounds(100,100,200,40);
+        noofdatabits.setBounds(100,260,200,40); 
         frame.getContentPane().add(info);
         frame.getContentPane().add(nprompt);
         frame.getContentPane().add(noofdatabits);
@@ -490,9 +524,9 @@ public class HammingGUI{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setBackground(new Color(254,243,199));
         frame.setResizable(true);            
-        frame.getContentPane().setPreferredSize(new Dimension(800,500));
+        frame.getContentPane().setPreferredSize(new Dimension(1200,1000));
         frame.setLocationRelativeTo(null);
-        frame.setLayout(new FlowLayout());
+        frame.setLayout(null);
         frame.pack();
         frame.setVisible(true);
     }
