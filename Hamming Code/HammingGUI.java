@@ -509,17 +509,20 @@ public class HammingGUI{
                 }
             }
         );
+        
         nprompt.setFont(new Font("Verdana", Font.BOLD, 18));
         nprompt.setBounds(100,180,1000,80);
         info.setFont(new Font("Verdana", Font.BOLD, 18));
-        info.setBounds(450,50,1000,80);
-        proceedwithnbt.setFont(new Font("Verdana", Font.PLAIN, 18));
-        proceedwithnbt.setBounds(100,100,200,40);
+        info.setBounds(450,10,1000,80);
         noofdatabits.setBounds(100,260,200,40); 
+        proceedwithnbt.setFont(new Font("Verdana", Font.PLAIN, 18));
+        proceedwithnbt.setBounds(100,320,200,40);
+        JLabel dummy=new JLabel();
         frame.getContentPane().add(info);
         frame.getContentPane().add(nprompt);
         frame.getContentPane().add(noofdatabits);
         frame.getContentPane().add(proceedwithnbt);
+        frame.getContentPane().add(dummy);
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setBackground(new Color(254,243,199));

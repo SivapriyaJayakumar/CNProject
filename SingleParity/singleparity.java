@@ -233,6 +233,7 @@ public class singleparity{
                                                             // if even parity is chosen , 1st case will be executed.
                                                             case 1:
                                                             int parityeven=calcEvenParity(data_receiver_arr);
+                                                            System.out.println("Parity calc at receiver "+parityeven);
                                                             if(parityeven==0){
                                                                 System.out.println("NO ERROR");
                                                                 result.setText(result.getText()+"NO ERROR");
@@ -248,6 +249,7 @@ public class singleparity{
                                                             // if odd parity is chosen , 2nd case will be executed.
                                                             case 2:
                                                             int parityodd=calcOddParity(data_receiver_arr);
+                                                             System.out.println("Parity calc at receiver "+parityodd);
                                                             if(parityodd==0){
                                                                 System.out.println("NO ERROR");
                                                                 result.setText(result.getText()+" NO ERROR");

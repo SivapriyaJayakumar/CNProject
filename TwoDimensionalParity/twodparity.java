@@ -26,8 +26,6 @@ public class twodparity{
     int colparity[];
     // rparity  --> to store column parity of row parities
     int rparity=-1;
-    // cparity  --> to store row parity of column parities
-    int cparity=-1;
     // rowparity_receiver  --> to store row wise parities at receiver side
     int rowparity_receiver[];
     // colparity_receiver  --> to store column wise parities at receiver side
@@ -53,6 +51,7 @@ public class twodparity{
         else{
             retval=1;
         }
+         System.out.println(retval+"is retval");
         return retval;
     }
     /*
@@ -76,6 +75,7 @@ public class twodparity{
         else{
             retval=0;
         }
+        System.out.println(retval+"is retval");
         return retval;
     }
 
@@ -329,7 +329,7 @@ public class twodparity{
                                             rowparity=new int[k];
                                             colparity=new int[n];
                                             // if r1 is selected --> even parity is selected
-                                            // calculating row paritoes, colparities, rparity,cparity
+                                            // calculating row parities, colparities, rparity
                                             if(r1.isSelected()){
                                                 choice=1;
                                                 System.out.println("Chosen EVEN PARITY ");
@@ -337,18 +337,16 @@ public class twodparity{
                                                 rowparity=calcRowEvenParity(sender,n,k);
                                                 colparity=calcColEvenParity(sender,n,k);
                                                 rparity=calcEvenParity(rowparity);
-                                                cparity=calcEvenParity(colparity);
                                                 displaychosenparity.setText(displaychosenparity.getText()+"  EVEN PARITY");
                                             }
                                             // if r2 is selected --> odd parity is selected
-                                            // calculating row paritoes, colparities, rparity,cparity
+                                            // calculating row parities, colparities, rparity
                                             else if(r2.isSelected()){
                                                 choice=2;
                                                 System.out.println("Chosen ODD PARITY ");
                                                 rowparity=calcRowOddParity(sender,n,k);
                                                 colparity=calcColOddParity(sender,n,k);
                                                 rparity=calcOddParity(rowparity);
-                                                cparity=calcOddParity(colparity);
                                                 displaychosenparity.setText(displaychosenparity.getText()+"  ODD PARITY");
                                                 
                                             }
@@ -356,12 +354,12 @@ public class twodparity{
                                             for(ind=0;ind<k;ind++){
                                                 sender[ind][n]=rowparity[ind];
                                             }
-                                            sender[ind][n]=rparity;
+                                            
                                             ind=0;
                                             for(ind=0;ind<n;ind++){
                                                 sender[k][ind]=colparity[ind];
                                             }
-                                            sender[k][ind]=cparity;
+                                            sender[k][ind]=rparity;
                                             //datatobesent --> setting label
                                             JLabel datatobesent=new JLabel("Data to be transmitted to receiver ");
                                             System.out.println("Data from Sender to be transmitted");
@@ -469,55 +467,58 @@ public class twodparity{
                                                         // getting parity choice 
                                                         switch(choice){
                                                             // if even parity is chosen , 1st case will be executed.
-                                                            // calculating row paritoes, colparities, rparity,cparity
+                                                            // calculating row parities, colparities, rparity
                                                             case 1:
-                                                            rowparity_receiver=calcRowEvenParity(receiver,n+1,k+1);
-                                                            colparity_receiver=calcColEvenParity(receiver,n+1,k+1);
+                                                            colparity_receiver=calcColEvenParity(receiver,n,k);
+                                                            rowparity_receiver=calcRowEvenParity(receiver,n,k);
                                                             rparity=calcEvenParity(rowparity_receiver);
-                                                            cparity=calcEvenParity(colparity_receiver);break;
+                                                            System.out.println("rparity"+ rparity);
+                                                            break;
                                                             
                                                             // if odd parity is chosen , 2nd case will be executed.
-                                                            // calculating row paritoes, colparities, rparity,cparity
+                                                            // calculating row parities, colparities, rparity
                                                             case 2:
-                                                            rowparity_receiver=calcRowOddParity(receiver,n+1,k+1);
-                                                            colparity_receiver=calcColOddParity(receiver,n+1,k+1);
+                                                            colparity_receiver=calcColOddParity(receiver,n,k);
+                                                            rowparity_receiver=calcRowOddParity(receiver,n,k);
                                                             rparity=calcOddParity(rowparity_receiver);
-                                                            cparity=calcOddParity(colparity_receiver);
+                                                            System.out.println("rparity"+ rparity);
                                                             break;
                                                         }
-                                                        // if all row parities are 0 --> rowparity_flag is true
-                                                        // cparity is row parity of column parities
-                                                        boolean rowparity_flag=true;
-                                                        for(int i=0;i<rowparity_receiver.length;i++){
-                                                            if(cparity==0){
-                                                                if(rowparity_receiver[i]==0){
-                                                                continue;
-                                                                }
-                                                            }
-                                                            else if(rowparity_receiver[i]==1){
-                                                                rowparity_flag=false;break;
-                                                            }
-                                                        }
+                                                     
                                                         // if all column parities are 0 --> colparity_flag is true
                                                         // rparity is column parity of row parities
                                                         boolean colparity_flag=true;
-                                                        for(int i=0;i<colparity_receiver.length;i++){
-                                                            if(rparity==0){
-                                                                if(colparity_receiver[i]==0){
+                                                        boolean rowparity_flag=true;
+                                                        for(int i=0;i<k;i++){
+                                                            System.out.println(rowparity_receiver[i]+"    ==   "+receiver[i][n]);
+                                                            if(rowparity_receiver[i]==receiver[i][n]){
                                                                 continue;
-                                                                }
                                                             }
-                                                            else if(colparity_receiver[i]==1){
-                                                                colparity_flag=false;break;
+                                                            else{
+                                                                rowparity_flag=false;break;
                                                             }
                                                         }
-
-                                                        if(colparity_flag && rowparity_flag){
+                                                        if(rparity!=receiver[k][n]){
+                                                            colparity_flag=false;
+                                                        }
+                                                        else{
+                                                            for(int i=0;i<n;i++){
+                                                                if(colparity_receiver[i]==receiver[k][i]){
+                                                                    continue;
+                                                                }
+                                                                else{
+                                                                    colparity_flag=false;break;
+                                                                }
+                                                            }
+                                                        }
+                                                        System.out.println(rowparity_flag);
+                                                        System.out.println(colparity_flag);
+                                                        if(rowparity_flag && colparity_flag){
                                                             System.out.println("NO ERROR");
                                                             result.setText(result.getText()+" NO ERROR ");
                                                             result.setForeground(new Color(22, 163, 74));
                                                         }
-                                                        else if(colparity_flag!=true && rowparity_flag!=true){
+                                                        else if(rowparity_flag!=true && colparity_flag!=true){
                                                             System.out.println("ERROR");
                                                             result.setText(result.getText()+"  ERROR ");
                                                             result.setForeground(new Color(255, 0, 0));
