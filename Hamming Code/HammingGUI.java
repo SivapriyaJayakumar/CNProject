@@ -472,7 +472,6 @@ public class HammingGUI{
                                                                     System.out.print(data_receiver_arr[i]);
                                                                     correctedData.setText(correctedData.getText()+data_receiver_arr[i]+" ");
                                                                 }  
-                                                        
                                                                 System.out.println();
                                                                 displayerrorbit.setBounds(100,520,10000,80);
                                                                 correctedData.setBounds(100,580,10000,80);
@@ -482,8 +481,15 @@ public class HammingGUI{
                                                                 correctedData.setFont(new Font("Verdana", Font.BOLD, 18));
                                                                 frame.getContentPane().add(correctedData);
                                                                 frame.pack();
-                                                                
                                                             }
+                                                             else{
+                                                                System.out.println("DED CALCULATED AT BOTH ENDS DOES NOT MATCH AND POSITION IS 0");
+                                                                result.setText(result.getText()+"DED CALCULATED AT BOTH ENDS DOES NOT MATCH AND POSITION IS 0");
+                                                            }
+                                                        
+                                                               
+                                                                
+                                                            
                                                         }
                                                     }
                                                 );

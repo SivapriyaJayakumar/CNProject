@@ -518,7 +518,7 @@ public class twodparity{
                                                             result.setText(result.getText()+" NO ERROR ");
                                                             result.setForeground(new Color(22, 163, 74));
                                                         }
-                                                        else if(rowparity_flag!=true && colparity_flag!=true){
+                                                        else if(rowparity_flag!=true || colparity_flag!=true){
                                                             System.out.println("ERROR");
                                                             result.setText(result.getText()+"  ERROR ");
                                                             result.setForeground(new Color(255, 0, 0));
