@@ -7,6 +7,8 @@ import javax.swing.JOptionPane;
 public class CSGUI{
     // frame
     JFrame frame;
+
+    JLabel title=new JLabel(" CHECKSUM ");
     // no of frames --> Textfield
     JTextField noofframes;
     // no of bits in each frame --> Textfield
@@ -710,6 +712,9 @@ public class CSGUI{
             
             }
         );
+        title.setBounds(540,40,1000,80);
+        title.setFont(new Font("Verdana", Font.BOLD, 18));
+        frame.getContentPane().add(title);
         //setting frame properties
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setBackground(new Color(254,243,199));
