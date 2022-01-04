@@ -3,6 +3,7 @@ import java.awt.*;
 import javax.swing.JScrollPane;
 import javax.swing.JOptionPane;
 public class CRCGUI {
+    JLabel title=new JLabel("CRC - Cyclic Redundancy Check");
     // global_n --> Power of Generating Polynomial
     int global_n=0;
     // coeff_inout --> Divisor Bits
@@ -70,6 +71,7 @@ public class CRCGUI {
     Description :
     */
     public void BuildGUI(){
+
         frame = new JFrame("Error Detector -  CRC ");
         label_prompt=new JLabel("Enter the power of the generator polynomial equation");
         enter_n=new JTextField(10);
@@ -94,6 +96,9 @@ public class CRCGUI {
                 }
             }
         ); 
+        frame.getContentPane().add(title);
+        title.setBounds(600,30,1000,80);
+        title.setFont(new Font("Verdana", Font.BOLD, 18));
         frame.getContentPane().setBackground(new Color(254,243,199));
         label_prompt.setFont(new Font("Verdana", Font.BOLD, 18));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -340,7 +345,7 @@ public class CRCGUI {
         coeffpanel.setLayout(null);
         scrollablearea.setVisible(true);
         f.getContentPane().add(scrollablearea);
-            
+        
         f.pack();
         bt.addActionListener(
             new java.awt.event.ActionListener() {
