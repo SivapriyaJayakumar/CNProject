@@ -250,6 +250,27 @@ public class CSGUI{
             System.out.println("end of for");
             //sum_total --> Converting final sum of data frames into string.
             String sum_total=sum.toString();
+            // If sum string is > n then overflow has occured.
+            //Can be resolved by logic : Sum+carry=NewSum
+            //Example --> 10+11=101 (1 is carry) --> 01+1=10 So, Sum is 10.
+            /*if(sum_total.length()>n){
+                //carry ind --> To find the length of carry
+                int carryind=sum_total.length()-n;
+                //carry --> String from 0th bit to carryind bit
+                String carry=sum_total.substring(0,carryind);
+                //sum_extracted --> String from carryind bit to end of string
+                String sum_extracted=sum_total.substring(carryind);
+                //finalsum --> String to Long conversion of sum
+                finalsum=Long.parseLong(sum_extracted);
+                //finalcarry --> String to Long conversion of carry
+                finalcarry=Long.parseLong(carry);
+                System.out.println("Carry is "+finalcarry);
+                System.out.println("Sum is "+finalsum);
+                //sum -->finding sum of sum and carry
+                sum=binaryAddition(finalcarry,finalsum,sum_extracted.length(),2);
+                System.out.println("Total Sum is "+sum);
+            
+            }*/
             
         }
         catch (Exception e){
@@ -293,11 +314,37 @@ public class CSGUI{
         System.out.println("for ended");    
         //sum_total --> Converting final sum of data frames into string. 
         String sum_total=sum.toString();
-        System.out.println("Total Sum 's length is not greater than N");
-        totalsum=sum;            
-        totalsum_str=sum_total;
-        System.out.println(" Sum is "+totalsum);
-        System.out.println("Total Sum str inside else is "+totalsum_str);
+        // If sum string is > n then overflow has occured.
+        //Can be resolved by logic : Sum+carry=NewSum
+        //Example --> 10+11=101 (1 is carry) --> 01+1=10 So, Sum is 10.
+        /*if(sum_total.length()>n){
+            System.out.println("Total Sum 's length is greater than N");
+            //carry ind --> To find the length of carry
+            int carryind=sum_total.length()-n;
+            //carry --> String from 0th bit to carryind bit
+            String carry=sum_total.substring(0,carryind);
+            //sum_extracted --> String from carryind bit to end of string
+            String sum_extracted=sum_total.substring(carryind);
+            //finalsum --> String to Long conversion of sum
+            finalsum=Long.parseLong(sum_extracted);
+            //finalcarry --> String to Long conversion of carry
+            finalcarry=Long.parseLong(carry);
+            System.out.println("Carry is "+finalcarry);
+            System.out.println("Sum is "+finalsum);
+            //totalsum -->finding sum of sum and carry
+            totalsum=binaryAddition(finalcarry,finalsum,sum_extracted.length(),2);
+            System.out.println("Total Sum is "+totalsum);
+            //totalsum_str -->fconversion of long to string
+            totalsum_str=Long.toString(totalsum);
+            System.out.println("Total Sum str inside if is "+totalsum_str);
+        }*/
+        //else{
+            System.out.println("Total Sum 's length is not greater than N");
+            totalsum=sum;
+            totalsum_str=sum_total;
+            System.out.println(" Sum is "+totalsum);
+            System.out.println("Total Sum str inside else is "+totalsum_str);
+        //}
         System.out.println("Checksum callig from addDataBits");
         //checksum --> array to store checksum
         checksum=new BigInteger[n];            

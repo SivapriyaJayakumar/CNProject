@@ -68,7 +68,7 @@ public class CRCGUI {
     /*
     BuildGUI Method
     Returns - Nothing
-    Description :
+    Description : BUILDS GUI bY CREATING COMPONENTS
     */
     public void BuildGUI(){
 
@@ -113,7 +113,7 @@ public class CRCGUI {
     /*
     DisplayPolynomialAndGetData Method
     Returns - Nothing
-    Description :
+    Description : GETS DATA FROM SENDER AND PERFORM ALL THE PROCESS
     */     
     public void DisplayPolynomialAndGetData(){
         int retflag=0;
@@ -300,7 +300,7 @@ public class CRCGUI {
     /*
     enter_n_act_prfmd Method
     Returns Nothing
-    Description :
+    Description : AFTER ENETRING N, WILL CALL PROCESSING FUNCTION
     */   
     public void enter_n_act_prfmd(java.awt.event.ActionEvent evt,String input_n,JFrame f){
         int num_inp=Integer.parseInt(input_n);

@@ -618,4 +618,124 @@ public class twodparity{
     twodparity obj=new twodparity();
     obj.BuildGUI();
     }
+    /*
+    Scanner scan=new Scanner(System.in);
+    System.out.println("Enter K");
+    int k=scan.nextInt();
+    System.out.println("Enter N");
+    int n=scan.nextInt();
+    int sender[][]=new int[k+1][n+1];
+    int receiver[][]=new int[k+1][n+1];
+    int rowparity[]=new int[k];
+    int colparity[]=new int[n];
+    int rowparity_receiver[]=new int[k];
+    int colparity_receiver[]=new int[n];
+    System.out.println("N is "+n);
+    for(int i=0;i<k;i++){
+        System.out.println("Enter data for frame"+(i+1));
+        for(int j=0;j<n;j++){
+            sender[i][j]=scan.nextInt();
+        }
+    }
+    System.out.println("Data from Sender");
+    
+    for(int i=0;i<k;i++){
+        System.out.println("Data of frame "+(i+1));
+    for(int j=0;j<n;j++){
+       System.out.print(sender[i][j]+" ");
+    }
+        System.out.println();
+    }
+    System.out.println("Enter Choice 1- even parity and 2- odd parity");
+    int choice=scan.nextInt();
+    int rparity=-1;int cparity=-1;
+    switch(choice){
+        case 1:
+        rowparity=obj.calcRowEvenParity(sender,n,k);
+        colparity=obj.calcColEvenParity(sender,n,k);
+        rparity=obj.calcEvenParity(rowparity);
+        cparity=obj.calcEvenParity(colparity);break;
+        case 2:
+        rowparity=obj.calcRowOddParity(sender,n,k);
+        colparity=obj.calcColOddParity(sender,n,k);
+        rparity=obj.calcOddParity(rowparity);
+        cparity=obj.calcOddParity(colparity);
+        break;
+    }
+
+    
+    int ind;
+    for(ind=0;ind<k;ind++){
+        sender[ind][n]=rowparity[ind];
+    }
+    sender[ind][n]=rparity;
+    ind=0;
+    for(ind=0;ind<n;ind++){
+        sender[k][ind]=colparity[ind];
+    }
+    sender[k][ind]=cparity;
+    System.out.println("Data from Sender to be transmitted");
+    
+    for(int i=0;i<k+1;i++){
+        System.out.println((i+1)+"Data of frame ");
+    for(int j=0;j<n+1;j++){
+       System.out.print(sender[i][j]+" ");
+    }
+        System.out.println();
+    }
+    System.out.println("Enter data Received");
+    for(int i=0;i<k+1;i++){
+        System.out.println("Enter data for frame"+(i+1));
+        for(int j=0;j<n+1;j++){
+            receiver[i][j]=scan.nextInt();
+        }
+    }
+
+    switch(choice){
+        case 1:
+        rowparity_receiver=obj.calcRowEvenParity(receiver,n+1,k+1);
+        colparity_receiver=obj.calcColEvenParity(receiver,n+1,k+1);
+        rparity=obj.calcEvenParity(rowparity_receiver);
+        cparity=obj.calcEvenParity(colparity_receiver);break;
+        case 2:
+        rowparity_receiver=obj.calcRowOddParity(receiver,n+1,k+1);
+        colparity_receiver=obj.calcColOddParity(receiver,n+1,k+1);
+        rparity=obj.calcOddParity(rowparity_receiver);
+        cparity=obj.calcOddParity(colparity_receiver);
+        break;
+    }
+    boolean rowparity_flag=true;
+    for(int i=0;i<rowparity_receiver.length;i++){
+        if(cparity==0){
+            if(rowparity_receiver[i]==0){
+            continue;
+            }
+        }
+        else if(rowparity_receiver[i]==1){
+            rowparity_flag=false;break;
+        }
+    }
+
+    boolean colparity_flag=true;
+    for(int i=0;i<colparity_receiver.length;i++){
+        if(rparity==0){
+            if(colparity_receiver[i]==0){
+            continue;
+            }
+        }
+        else if(colparity_receiver[i]==1){
+            colparity_flag=false;break;
+        }
+    }
+
+    if(colparity_flag && rowparity_flag){
+        System.out.println("NO ERROR");
+    }
+    else if(colparity_flag!=true && rowparity_flag!=true){
+        System.out.println("ERROR");
+    }
+    
+
+    }*/
+
 }

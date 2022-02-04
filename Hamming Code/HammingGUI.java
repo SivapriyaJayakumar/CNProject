@@ -46,7 +46,11 @@ public class HammingGUI{
         }
         return retval;
     }
-    
+     /*
+    BinaryToDecimal method
+    Returns - decimal equivalent of binary number --> int
+    Description : converts binary to decimal
+    */
     public int BinaryToDecimal(int []binary_data){  
         int decimal = 0;  
         int n = 0;  
@@ -59,7 +63,12 @@ public class HammingGUI{
         }  
     return decimal;  
     }   
-
+     /*
+    addDedBit method
+    Returns - ded i.e GP bit --> int
+    Description : 
+        calculate ded bit using  parity logic
+    */
     public int addDedBit(int data[],int choice){
         int cnt=0;
         for(int i=0;i<data.length;i++){
@@ -86,6 +95,12 @@ public class HammingGUI{
         return cnt;
         
     }           
+    /*
+    calculateNoOfRedundancyBits method
+    Returns -no of red bits--> int
+    Description : 
+        calculate no of red.bits using 2^r<=n+r+1 logic
+    */
     public int calculateNoOfRedundancyBits(int n){
         int r=0;
         while(Math.pow(2,r) < (n+r+1)){
@@ -95,6 +110,12 @@ public class HammingGUI{
         System.out.println("Number of Redundancy Bits are "+r);
         return r;
     }
+    /*
+    checkPowerOfTwo method
+    Returns -yes if it is power of 2--> int
+    Description : 
+        checks whether no is power of 2
+    */
     public boolean checkPowerOfTwo(int n){
         while (n != 1)
         {
@@ -105,7 +126,12 @@ public class HammingGUI{
         }
         return true;
     }
-
+   /*
+    parityValue method
+    Returns -parity--> int
+    Description : 
+        calculates parity bit at sender side
+    */
     public int parityValue(int data[],int redvalue[],int choice){
         int retval=0;
         for(int i=0;i<redvalue.length;i++){
@@ -134,7 +160,12 @@ public class HammingGUI{
         }
         return retval;
     }
-
+     /*
+    recalcParity method
+    Returns -parity--> int
+    Description : 
+        calculates parity bit at receiver side
+    */
     public int recalcParity(int paritybit,int data[],int redvalue[],int choice){
         int retval=0;
         System.out.println("Initial retval "+retval);
@@ -170,7 +201,12 @@ public class HammingGUI{
         }
         return retval;
     }
-
+    /*
+    checkReceivedParity method
+    Returns -parity arr--> int
+    Description : 
+        calculates all parity bits at receiver side
+    */
     public int[] checkReceivedParity(int received_parity[],int received_pure_data[],int n,int choice){
         int result[]=new int[n];
         int r1[]={3,5,7,9,11,13,15,17,19,21,23,25,27,29,31};
@@ -205,7 +241,12 @@ public class HammingGUI{
         return result;
 
     }
-
+    /*
+    calculateParityBits method
+    Returns -parity arr--> int
+    Description : 
+        calculates all parity bits at sender side
+    */
     public  int[] calculateParityBits(int r,int data[],int choice){
         int redundancybits[]=new int[r];
         int r1[]={3,5,7,9,11,13,15,17,19,21,23,25,27,29,31};
@@ -235,7 +276,12 @@ public class HammingGUI{
         }
         return redundancybits;
     }
-
+    /*
+    BuildGUI method
+    Returns - nothing
+    Description : 
+       BUILDS GUI COMPONENTS
+    */
     public void BuildGUI(){
         frame=new JFrame("Error Correction - Hamming Code(26,31)");
         JLabel info=new JLabel("HAMMING CODE ( 26,31) ");
@@ -539,6 +585,7 @@ public class HammingGUI{
         frame.pack();
         frame.setVisible(true);
     }
+    
     public static void main(String args[]){
         HammingGUI gui = new HammingGUI();
         gui.BuildGUI();
