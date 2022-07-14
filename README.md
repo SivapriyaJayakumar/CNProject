@@ -10,3 +10,9 @@
 ### Error Correction Technique 
 
   - Hamming Code
+
+### Application - Overview
+
+## Cyclic Redundancy Check - GUI
+
+![alt text for screen readers](/Users/sivachidambaram/Documents/Priya/Sem 5/CN Project/Images/CRC/CRC1.png) {align=center}
