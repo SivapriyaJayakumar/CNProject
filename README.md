@@ -43,3 +43,31 @@
 
 <img src="/Images/CRC/CRC10.png" alt="Screen Image" >
 <img src="/Images/CRC/CRC11.png" alt="Screen Image" >
+
+
+
+## Hamming Code (26,31) - GUI
+
+### Enter Data Related Information
+
+<img src="/Images/Hamming Code/HC1.png" alt="Screen Image" >
+<img src="/Images/Hamming Code/HC2.png" alt="Screen Image" >
+
+### Enter Parity Choice 
+
+<img src="/Images/Hamming Code/HC3.png" alt="Screen Image" >
+
+### NO ERROR 
+
+<img src="/Images/Hamming Code/HC4.png" alt="Screen Image" >
+<img src="/Images/Hamming Code/HC5.png" alt="Screen Image" >
+
+### SEDC
+
+<img src="/Images/Hamming Code/HC5.png" alt="Screen Image" >
+<img src="/Images/Hamming Code/HC6.png" alt="Screen Image" >
+
+### DED
+
+<img src="/Images/Hamming Code/HC7.png" alt="Screen Image" >
+<img src="/Images/Hamming Code/HC8.png" alt="Screen Image" >
